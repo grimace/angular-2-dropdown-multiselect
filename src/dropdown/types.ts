@@ -4,6 +4,10 @@ export interface IMultiSelectOption {
   isLabel?: boolean;
   parentId?: any;
   params?: any;
+  description?: any;
+  value?: any;
+  image?:any;
+  enabled?: boolean;
 }
 
 export interface IMultiSelectSettings {
