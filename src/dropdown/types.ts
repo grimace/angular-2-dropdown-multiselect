@@ -1,13 +1,15 @@
 export interface IMultiSelectOption {
-  id: any;
-  name: string;
-  isLabel?: boolean;
+  id?: any;
+  name?: any;
+  type?: any;
   parentId?: any;
   params?: any;
   description?: any;
   value?: any;
   image?:any;
   enabled?: boolean;
+  radioGroup?: any;
+  dropDownGroup?: any;
 }
 
 export interface IMultiSelectSettings {
@@ -26,6 +28,7 @@ export interface IMultiSelectSettings {
   dynamicTitleMaxItems?: number;
   maxHeight?: string;
   displayAllSelectedText?: boolean;
+  dropdownSettings?: IMultiSelectSettings;
 }
 
 export interface IMultiSelectTexts {

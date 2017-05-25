@@ -100,7 +100,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   }
 
   getItemStyle(option: IMultiSelectOption): any {
-    if (!option.isLabel) {
+    if (option.type == "checkbox") {
       return { 'cursor': 'pointer' };
     }
   }
