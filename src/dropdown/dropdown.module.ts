@@ -3,10 +3,11 @@ import { MultiSelectSearchFilter } from './search-filter.pipe';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Accordion, AccordionGroup } from './accordion/accordion.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule],
-  exports: [MultiselectDropdown, MultiSelectSearchFilter],
-  declarations: [MultiselectDropdown, MultiSelectSearchFilter],
+  exports: [MultiselectDropdown, MultiSelectSearchFilter, Accordion, AccordionGroup],
+  declarations: [MultiselectDropdown, MultiSelectSearchFilter, Accordion, AccordionGroup ],
 })
 export class MultiselectDropdownModule { }

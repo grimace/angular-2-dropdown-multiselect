@@ -5,7 +5,7 @@
  * https://github.com/softsimon/angular-2-dropdown-multiselect
  */
 import { MultiSelectSearchFilter } from './search-filter.pipe';
-import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from './types';
+import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts, IMultiSelectOptionGroup, GUARDTYPE } from './types';
 import {
   Component,
   DoCheck,
@@ -21,6 +21,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR, Validator } from '@angular/forms';
+import { Accordion, AccordionGroup } from './accordion/accordion.component';
 
 const MULTISELECT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -36,17 +37,23 @@ const MULTISELECT_VALUE_ACCESSOR: any = {
 })
 export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlValueAccessor, Validator {
   @Input() options: Array<IMultiSelectOption>;
+  @Input() groups: Array<IMultiSelectOptionGroup>;
   @Input() settings: IMultiSelectSettings;
   @Input() texts: IMultiSelectTexts;
   @Input() disabled: boolean = false;
+
   @Output() selectionLimitReached = new EventEmitter();
   @Output() dropdownClosed = new EventEmitter();
   @Output() dropdownOpened = new EventEmitter();
   @Output() onAdded = new EventEmitter();
   @Output() onRemoved = new EventEmitter();
 
+  @Output() searchChanged = new EventEmitter();
+
+
   @HostListener('document: click', ['$event.target'])
   onClick(target: HTMLElement) {
+
     if (!this.isVisible) return;
     let parentFound = false;
     while (target != null && !parentFound) {
@@ -62,6 +69,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   }
 
   model: any[];
+  radioValue: any;
   parents: any[];
   title: string;
   differ: any;
@@ -82,7 +90,10 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
     showUncheckAll: false,
     fixedTitle: false,
     dynamicTitleMaxItems: 3,
-    maxHeight: '300px',
+    maxHeight: '300px'
+    // booleans: [ { name:'Any Selected', value:'Any' }, { name:'All Selected', value:'All' }, { name:'None Selected', value:'None' }],
+    // boolean: 'Any'
+
   };
   defaultTexts: IMultiSelectTexts = {
     checkAll: 'Check all',
@@ -97,6 +108,14 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   constructor(private element: ElementRef,
     differs: IterableDiffers) {
     this.differ = differs.find([]).create(null);
+  }
+
+  search(event) {
+    console.log('search - event : '+event);
+    this.searchFilterText = event;
+    console.log('dropdown.component search - before : '+this.searchFilterText);
+    this.searchChanged.emit(event);
+    console.log('dropdown.component search - after :'+this.searchFilterText);
   }
 
   getItemStyle(option: IMultiSelectOption): any {
@@ -135,12 +154,20 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
     }
   }
 
+  onRadioChange($event, item) {
+
+  }
+
   registerOnChange(fn: Function): void {
     this.onModelChange = fn;
   }
 
   registerOnTouched(fn: Function): void {
     this.onModelTouched = fn;
+  }
+
+  isDisabled(option:IMultiSelectOption) {
+    return !option.enabled;
   }
 
   setDisabledState(isDisabled: boolean) {
@@ -175,13 +202,19 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   toggleDropdown() {
     this.isVisible = !this.isVisible;
     this.isVisible ? this.dropdownOpened.emit() : this.dropdownClosed.emit();
+    console.log('toggleDropdown - visible : '+this.isVisible);
   }
 
-  isSelected(option: IMultiSelectOption): boolean {
+  isSelectedSave(option: IMultiSelectOption): boolean {
     return this.model && this.model.indexOf(option.id) > -1;
   }
 
-  setSelected(_event: Event, option: IMultiSelectOption) {
+  isSelected(option: IMultiSelectOption): boolean {
+    return option.on;
+    // return this.model && this.model.indexOf(option.id) > -1;
+  }
+
+  setSelectedSave(_event: Event, option: IMultiSelectOption) {
     _event.stopPropagation();
     if (!this.model) {
       this.model = [];
@@ -232,6 +265,63 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
       this.toggleDropdown();
     }
     this.model = this.model.slice();
+    this.onModelChange(this.model);
+    this.onModelTouched();
+  }
+
+
+  setSelected(_event: Event, option: IMultiSelectOption) {
+    _event.stopPropagation();
+    option.on = true;
+    // if (!this.model) {
+    //   this.model = [];
+    // }
+    // const index = this.model.indexOf(option.id);
+    // if (index > -1) {
+    //   this.model.splice(index, 1);
+    //   this.onRemoved.emit(option.id);
+    //   const parentIndex = option.parentId && this.model.indexOf(option.parentId);
+    //   if (parentIndex >= 0) {
+    //     this.model.splice(parentIndex, 1);
+    //     this.onRemoved.emit(option.parentId);
+    //   } else if (this.parents.indexOf(option.id) > -1) {
+    //     let childIds = this.options.filter(child => this.model.indexOf(child.id) > -1 && child.parentId == option.id).map(child => child.id);
+    //     this.model = this.model.filter(id => childIds.indexOf(id) < 0);
+    //     childIds.forEach(childId => this.onRemoved.emit(childId));
+    //   }
+    // } else {
+    //   if (this.settings.selectionLimit === 0 || (this.settings.selectionLimit && this.model.length < this.settings.selectionLimit)) {
+    //     this.model.push(option.id);
+    //     this.onAdded.emit(option.id);
+    //     if (option.parentId) {
+    //       let children = this.options.filter(child => child.id !== option.id && child.parentId == option.parentId);
+    //       if (children.every(child => this.model.indexOf(child.id) > -1)) {
+    //         this.model.push(option.parentId);
+    //         this.onAdded.emit(option.parentId);
+    //       }
+    //     } else if (this.parents.indexOf(option.id) > -1) {
+    //       let children = this.options.filter(child => this.model.indexOf(child.id) < 0 && child.parentId == option.id);
+    //       children.forEach(child => {
+    //         this.model.push(child.id);
+    //         this.onAdded.emit(child.id);
+    //       })
+    //     }
+    //   } else {
+    //     if (this.settings.autoUnselect) {
+    //       this.model.push(option.id);
+    //       this.onAdded.emit(option.id);
+    //       const removedOption = this.model.shift();
+    //       this.onRemoved.emit(removedOption);
+    //     } else {
+    //       this.selectionLimitReached.emit(this.model.length);
+    //       return;
+    //     }
+    //   }
+    // }
+    // if (this.settings.closeOnSelect) {
+    //   this.toggleDropdown();
+    // }
+    // this.model = this.model.slice();
     this.onModelChange(this.model);
     this.onModelTouched();
   }
@@ -302,4 +392,123 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
       event.preventDefault();
     }
   }
+
+
+  updateRadio( event, option, item ) {
+
+    // event.stopPropagation();
+    option.option = item.value;
+    console.log('updateRadio : '+option.option+' , '+item.name);
+    if (item.value == 0) {
+        option.enabled = false;
+    } else {
+        option.enabled = true;
+    }
+    this.onModelChange(this.model);
+
+    // this.onModelTouched();
+    // for (var idx=0; idx < group.length; idx++) {
+    //     var option = group[idx];
+    //     if (option.id != item.id) {
+    //       option.enabled = false;
+    //     }
+    //
+    // }
+    // item.enabled = true;
+    // this.radioValue = item;
+  }
+
+  updateGuard( event, option, item:IMultiSelectOption ) {
+
+    item.on = !item.on;
+    console.log('updateGuard : '+item.on);
+    var group:IMultiSelectOption [] = option.group;
+    if (item.on) {
+      if (item.guard) {
+        item.enabled = false;
+        for (var idx=0; idx < option.group.length; idx++) {
+          var itm = group[idx];
+          if (!itm.guard) {
+            //  itm.enabled = false;
+             itm.on = false;
+          }
+        }
+      } else {
+        for (var idx=0; idx < option.group.length; idx++) {
+          var itm = group[idx];
+          if (itm.guard) {
+             itm.on = false;
+             itm.enabled = true;
+          // } else {
+          //   itm.enabled = true;
+          }
+        }
+      }
+    } else {
+      // if (item.guard) {
+      //   for (var idx=0; idx < option.group.length; idx++) {
+      //     var itm = group[idx];
+      //     if (!itm.guard) {
+      //        itm.enabled = true;
+      //     }
+      //   }
+      // } else {
+      if (!item.guard) {
+        var anyOn: boolean = false;
+        var guard;
+        for (var idx=0; idx < option.group.length; idx++) {
+          var itm = group[idx];
+          if (!itm.guard) {
+             if (itm.on) {
+               anyOn = true;
+             }
+          } else {
+            guard = itm;
+          }
+        }
+        if (!anyOn) {
+          guard.on = true;
+          guard.enabled = false;
+        }
+      }
+    }
+    // event.stopPropagation();
+    // option.option = item.value;
+    // var isGuard:boolean = false;
+    // if (item.guard) {
+    //     isGuard = true;
+    // }
+    //
+    // switch (option.guardType) {
+    //   case GUARDTYPE.ALLOW:
+    //     for (var idx=0; idx < option.guardGroup.length; idx++) {
+    //         var itm = option.guardGroup[idx];
+    //         if (!itm.guard) {
+    //           itm.enable = true;
+    //         }
+    //
+    //     }
+    //     break;
+    //   case GUARDTYPE.PREVENT:
+    //     for (var idx=0; idx < option.guardGroup.length; idx++) {
+    //         var itm = option.guardGroup[idx];
+    //         if (!itm.guard) {
+    //           itm.enable = false;
+    //         }
+    //     }
+    //     break;
+    // }
+    //
+    // if (option.guardType === GUARDTYPE.ALLOW) {
+    //
+    // }
+    // console.log('updateGuard : '+option.option+' , '+item.name);
+    // if (item.value == 0) {
+    //     option.enabled = false;
+    // } else {
+    //     option.enabled = true;
+    // }
+    this.onModelChange(this.model);
+  }
+
 }

@@ -2,6 +2,16 @@ a {
   outline: none !important;
 }
 
+.boolean-check {
+  display: inline-block;
+  color: #0275d8;
+  border: #2196F3;
+  border-style: solid;
+  border-width: thin;
+  border-radius: 4px;
+  margin-left: 40px;
+
+}
 .dropdown-inline {
   display: inline-block;
 }
@@ -10,4 +20,40 @@ a {
   margin-left: 4px;
   white-space: nowrap;
   display: inline-block;
+}
+
+.radioLabel {
+  display: inline-block;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.radioGroup {
+  max-width: 200px;
+  white-space: nowrap;
+  display: inline-block;
+  padding-left: 14px;
+}
+.radioButton {
+  position: relative;
+  padding-left: 2px;
+  padding-right: 2px;
+  /*margin-left: 4px;
+  padding-left: 10px;*/
+  white-space: nowrap;
+  display: inline-block;
+}
+.check-control {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#searchText {
+  min-height: 34px;
+  margin-top: 11px;
+}
+
+.input-group-addon {
+    margin-left: 20px;
+    margin-top: 10px;
 }

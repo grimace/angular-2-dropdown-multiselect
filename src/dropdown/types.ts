@@ -1,3 +1,34 @@
+export enum Relation {
+   INDEPENDENT = 1,
+   CONTROLLER,
+   INVERSE,
+   EXCLUSIVE
+}
+
+export enum GUARDTYPE {
+   ALLOW = 1,
+   PREVENT,
+   PARENT
+}
+
+export interface IMultiSelectOptionGroup {
+  id?: any;
+  name?: any;
+  type?: any;
+  options?: any [];
+  heading?: string;
+  open?: boolean;
+  content?: any [];
+
+}
+
+export interface ISelectionModel {
+  id?: any;
+  on?: boolean;
+  enabled?: boolean;
+  selected?: boolean;
+}
+
 export interface IMultiSelectOption {
   id?: any;
   name?: any;
@@ -7,9 +38,17 @@ export interface IMultiSelectOption {
   description?: any;
   value?: any;
   image?:any;
+  on?: boolean;
   enabled?: boolean;
-  radioGroup?: any;
+  selected?: boolean;
+  group?: IMultiSelectOption [];
+  // guardGroup?: IMultiSelectOption [];
+  guardType?: GUARDTYPE;
+  guard?: boolean;
   dropDownGroup?: any;
+  multiplier?:number;
+  valueType?:any;
+  option?: any;
 }
 
 export interface IMultiSelectSettings {
@@ -27,8 +66,11 @@ export interface IMultiSelectSettings {
   fixedTitle?: boolean;
   dynamicTitleMaxItems?: number;
   maxHeight?: string;
+  searchText?: string;
   displayAllSelectedText?: boolean;
   dropdownSettings?: IMultiSelectSettings;
+  operators?:any[];
+  operator?: string;
 }
 
 export interface IMultiSelectTexts {
