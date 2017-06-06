@@ -35,22 +35,10 @@ export class Accordion {
 
 @Component({
   selector: 'accordion-group',
-  template:`
-      <div class="panel panel-default" [ngClass]="{'panel-open': isOpen}">
-        <div class="panel-heading" (click)="toggleOpen($event)">
-          <h4 class="panel-title">
-            <a href tabindex="0"><span class=" mdropdown-item dropdown-header">{{heading}}</span></a>
-          </h4>
-        </div>
-        <div class="panel-collapse" [hidden]="!isOpen">
-          <div class="panel-body">
-              <ng-content></ng-content>
-          </div>
-        </div>
-      </div>
-    `,
-
+  templateUrl: './accordion.component.html',
+  styleUrls: ['./accordion.component.css']
 })
+
 export class AccordionGroup implements OnDestroy {
   private _isOpen:boolean = false;
 
@@ -78,6 +66,7 @@ export class AccordionGroup implements OnDestroy {
 
   toggleOpen(event: MouseEvent): void {
     event.preventDefault();
+    event.stopPropagation();
     this.isOpen = !this.isOpen;
   }
 }
