@@ -32,7 +32,7 @@ const MULTISELECT_VALUE_ACCESSOR: any = {
 @Component({
   selector: 'ss-multiselect-dropdown',
   templateUrl: './dropdown.component.html',
-  styleUrls: ['./dropdown.component.css'],
+  styleUrls: ['./dropdown.component.css', './accordion/accordion.component.css'],
   providers: [MULTISELECT_VALUE_ACCESSOR]
 })
 export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlValueAccessor, Validator {
@@ -406,22 +406,133 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
     }
     this.onModelChange(this.model);
 
-    // this.onModelTouched();
-    // for (var idx=0; idx < group.length; idx++) {
-    //     var option = group[idx];
-    //     if (option.id != item.id) {
-    //       option.enabled = false;
-    //     }
-    //
-    // }
-    // item.enabled = true;
-    // this.radioValue = item;
   }
 
-  updateGuard( event, option, item:IMultiSelectOption ) {
+  updateAllowGuard(event, option, item:IMultiSelectOption ) {
+    item.on = !item.on;
+    console.log('updateGuard Allow : '+item.on);
+    var group:IMultiSelectOption [] = option.group;
+    if (item.guard) {
+      for (var idx=0; idx < group.length; idx++) {
+        var itm = group[idx];
+        if (!itm.guard) {
+           itm.enabled = item.on;
+        }
+      }
+    }
+    this.onModelChange(this.model);
+
+  }
+
+  updateParentGuard(event, option, item:IMultiSelectOption ) {
 
     item.on = !item.on;
-    console.log('updateGuard : '+item.on);
+    var group:IMultiSelectOption [] = option.group;
+    var groupSize = group.length-1;
+    if (!item.on) {
+      // only children can be turned off
+      for (var idx=0; idx < group.length; idx++) {
+        var itm = group[idx];
+        if (itm.guard) {
+           itm.on = false;
+           itm.enabled = true;
+        }
+      }
+    } else {
+      if (item.guard) {
+        for (var idx=0; idx < group.length; idx++) {
+          var itm = group[idx];
+          if (!itm.guard) {
+             itm.on = true;
+            //  itm.enabled = false;
+          }
+        }
+        item.enabled = false;
+      } else {
+        // var allon:boolean = true;
+        var guard;
+        var count = 0;
+        for (var idx=0; idx < group.length; idx++) {
+          var itm = group[idx];
+          if (!itm.guard) {
+            if (itm.on) {
+               count ++;
+            }
+            //  allon = false;
+            //  break;
+          } else {
+            guard = itm;
+          }
+        }
+        if (groupSize == count) {
+            guard.on = true;
+            guard.enabled = false;
+            // this.clearGuardItems(option);
+            // item.on = false;
+        }
+      }
+    }
+    console.log('updateGuard Parent : '+item.on);
+    this.onModelChange(this.model);
+
+  }
+
+  clearGuardItems(option) {
+    setTimeout(()=>{
+      console.log('clearing guard items for option');
+      var group:IMultiSelectOption [] = option.group;
+      for (var idx=0; idx < group.length; idx++) {
+        var itm = group[idx];
+        if (!itm.guard) {
+          itm.on = false;
+        }
+      }
+    }, 0);
+  }
+  // in this case, the guard checkbox is only an indicator of whether all are on
+  // guard is never enabled
+  updateCollectiveGuard(event, option, item:IMultiSelectOption ) {
+
+    item.on = !item.on;
+    console.log('updateGuard Parent : '+item.on);
+    var group:IMultiSelectOption [] = option.group;
+    if (!item.on) {
+      // only children can be turned off
+      for (var idx=0; idx < group.length; idx++) {
+        var itm = group[idx];
+        if (itm.guard) {
+           itm.on = false;
+           itm.enabled = false;
+        }
+      }
+    } else {
+      if (!item.guard) {
+        var allon:boolean = true;
+        var guard;
+        for (var idx=0; idx < group.length; idx++) {
+          var itm = group[idx];
+          if (!itm.guard && !itm.on) {
+             allon = false;
+             break;
+          } else {
+            guard = itm;
+          }
+        }
+        if (allon) {
+            guard.on = true;
+            guard.enabled = false;
+        }
+      }
+    }
+    this.onModelChange(this.model);
+
+  }
+
+
+  updatePreventGuard(event, option, item:IMultiSelectOption ) {
+
+    item.on = !item.on;
+    console.log('updateGuard Prevent : '+item.on);
     var group:IMultiSelectOption [] = option.group;
     if (item.on) {
       if (item.guard) {
@@ -439,20 +550,10 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
           if (itm.guard) {
              itm.on = false;
              itm.enabled = true;
-          // } else {
-          //   itm.enabled = true;
           }
         }
       }
     } else {
-      // if (item.guard) {
-      //   for (var idx=0; idx < option.group.length; idx++) {
-      //     var itm = group[idx];
-      //     if (!itm.guard) {
-      //        itm.enabled = true;
-      //     }
-      //   }
-      // } else {
       if (!item.guard) {
         var anyOn: boolean = false;
         var guard;
@@ -472,43 +573,30 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
         }
       }
     }
-    // event.stopPropagation();
-    // option.option = item.value;
-    // var isGuard:boolean = false;
-    // if (item.guard) {
-    //     isGuard = true;
-    // }
-    //
-    // switch (option.guardType) {
-    //   case GUARDTYPE.ALLOW:
-    //     for (var idx=0; idx < option.guardGroup.length; idx++) {
-    //         var itm = option.guardGroup[idx];
-    //         if (!itm.guard) {
-    //           itm.enable = true;
-    //         }
-    //
-    //     }
-    //     break;
-    //   case GUARDTYPE.PREVENT:
-    //     for (var idx=0; idx < option.guardGroup.length; idx++) {
-    //         var itm = option.guardGroup[idx];
-    //         if (!itm.guard) {
-    //           itm.enable = false;
-    //         }
-    //     }
-    //     break;
-    // }
-    //
-    // if (option.guardType === GUARDTYPE.ALLOW) {
-    //
-    // }
-    // console.log('updateGuard : '+option.option+' , '+item.name);
-    // if (item.value == 0) {
-    //     option.enabled = false;
-    // } else {
-    //     option.enabled = true;
-    // }
     this.onModelChange(this.model);
+
+  }
+
+  updateGuard( event, option, item:IMultiSelectOption ) {
+
+    switch(option.guardType) {
+      case GUARDTYPE.ALLOW:
+        this.updateAllowGuard(event, option, item);
+        break;
+
+      case GUARDTYPE.PARENT:
+        this.updateParentGuard(event, option, item);
+        break;
+
+      case GUARDTYPE.PREVENT:
+        this.updatePreventGuard(event, option, item);
+        break;
+
+      case GUARDTYPE.COLLECTIVE:
+        this.updateCollectiveGuard(event, option, item);
+        break;
+
+    }
   }
 
 }

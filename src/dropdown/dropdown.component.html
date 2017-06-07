@@ -66,7 +66,8 @@
       <span *ngIf='option.type == "guardgroup"' class="guardGroup">
         <a *ngFor="let item of option.group" (click)="updateGuard($event, option, item)" role="menuitem" tabindex="-1" [style.padding-left]="this.parents.length>0&&this.parents.indexOf(option.id)<0&&'30px'">
 
-          <input *ngIf="settings.checkedStyle === 'checkboxes'" type="checkbox" [checked]="isSelected(item)"  (click)="preventCheckboxCheck($event, option)" [disabled]="isDisabled(item)"/>
+          <!-- <input *ngIf="settings.checkedStyle === 'checkboxes'" type="checkbox" [checked]="isSelected(item)"  (click)="preventCheckboxCheck($event, option)" [disabled]="isDisabled(item)"/> -->
+          <input *ngIf="settings.checkedStyle === 'checkboxes'" type="checkbox" [checked]="item.on"  (click)="preventCheckboxCheck($event, option)" [disabled]="isDisabled(item)"/>
           <span *ngIf="settings.checkedStyle === 'glyphicon'" style="width: 16px;" class="glyphicon" [class.glyphicon-ok]="isSelected(option)"></span>
           <span *ngIf="settings.checkedStyle === 'fontawesome'" style="width: 16px;display: inline-block;">
             <i *ngIf="isSelected(item)" class="fa fa-check" aria-hidden="true"></i>
@@ -80,7 +81,7 @@
 
       <span class="radioGroup" *ngIf='option.type == "group"'>
         <label class="radioLabel" *ngFor="let item of option.radioGroup" (click)="updateRadio($event, option, item)">
-            <input class="radioButton" type="radio" name="{{option.name}}" (click)="updateRadio($event, option, item)" [checked]="option.option === item.value">
+            <input class="radioButton" type="radio" name="{{option.name}}" (click)="updateRadio($event, option, item)" [checked]="item.on">
             {{item.name}}
         </label>
       </span>

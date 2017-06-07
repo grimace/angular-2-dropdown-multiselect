@@ -35,8 +35,26 @@ export class Accordion {
 
 @Component({
   selector: 'accordion-group',
-  templateUrl: './accordion.component.html',
-  styleUrls: ['./accordion.component.css']
+  // templateUrl: './accordion.component.html',
+  template:
+  `<div class="panel panel-default" [ngClass]="{'panel-open': isOpen}">
+    <div class="panel-heading" (click)="toggleOpen($event)">
+      <h4 class="panel-title">
+        <a href tabindex="0">
+          <span class="mdropdown-item dropdown-header">
+          <img *ngIf="_isOpen" class="twistie" src="assets/icons/twistie_on.png">
+          <img *ngIf="!_isOpen" class="twistie" src="assets/icons/twistie_off.png">
+          {{heading}}
+          </span>
+        </a>
+      </h4>
+    </div>
+    <div class="panel-collapse" [hidden]="!isOpen">
+      <div class="panel-body">
+          <ng-content></ng-content>
+      </div>
+    </div>
+  </div>`
 })
 
 export class AccordionGroup implements OnDestroy {

@@ -8,7 +8,8 @@ export enum Relation {
 export enum GUARDTYPE {
    ALLOW = 1,
    PREVENT,
-   PARENT
+   PARENT,
+   COLLECTIVE
 }
 
 export interface IMultiSelectOptionGroup {
