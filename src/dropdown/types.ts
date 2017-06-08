@@ -38,6 +38,7 @@ export interface IMultiSelectOption {
   params?: any;
   description?: any;
   value?: any;
+  featureType?:string;
   image?:any;
   on?: boolean;
   enabled?: boolean;
@@ -64,6 +65,7 @@ export interface IMultiSelectSettings {
   autoUnselect?: boolean;
   showCheckAll?: boolean;
   showUncheckAll?: boolean;
+  showResetAll?:boolean;
   fixedTitle?: boolean;
   dynamicTitleMaxItems?: number;
   maxHeight?: string;
@@ -77,6 +79,7 @@ export interface IMultiSelectSettings {
 export interface IMultiSelectTexts {
   checkAll?: string;
   uncheckAll?: string;
+  resetAll?: string;
   checked?: string;
   checkedPlural?: string;
   searchPlaceholder?: string;
