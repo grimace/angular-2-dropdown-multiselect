@@ -22,6 +22,7 @@ import {
 } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR, Validator } from '@angular/forms';
 import { Accordion, AccordionGroup } from './accordion/accordion.component';
+import { NouisliderModule } from 'ng2-nouislider';
 
 const MULTISELECT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -76,6 +77,11 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   numSelected: number = 0;
   isVisible: boolean = false;
   searchFilterText: string = '';
+
+  // sliderMin: number = 0;
+  // sliderMax: number = 10;
+  // sliderStep: number = 1;
+  // sliderValue: number;
 
   defaultSettings: IMultiSelectSettings = {
     pullRight: false,
@@ -692,5 +698,9 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
 
     }
   }
+
+  // sliderChange( event ) {
+  //   console.log(event);
+  // }
 
 }
