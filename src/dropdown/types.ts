@@ -43,6 +43,7 @@ export interface IMultiSelectOption {
   on?: boolean;
   enabled?: boolean;
   selected?: boolean;
+  selector?:string;
   group?: IMultiSelectOption [];
   // guardGroup?: IMultiSelectOption [];
   guardType?: GUARDTYPE;
