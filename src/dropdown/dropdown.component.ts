@@ -49,6 +49,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   @Output() onRemoved = new EventEmitter();
 
   @Output() searchChanged = new EventEmitter();
+  @Output() resetAll = new EventEmitter();
 
 
   @HostListener('document: click', ['$event.target'])
@@ -384,6 +385,11 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
     });
     this.onModelChange(this.model);
     this.onModelTouched();
+  }
+
+  reset() {
+    console.log('a2 emitting resetAll');
+    this.resetAll.emit();
   }
 
   preventCheckboxCheck(event: Event, option: IMultiSelectOption) {

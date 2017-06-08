@@ -58,7 +58,7 @@ export class Accordion {
 })
 
 export class AccordionGroup implements OnDestroy {
-  private _isOpen:boolean = false;
+  public _isOpen:boolean = false;
 
   @Input() heading: string;
 

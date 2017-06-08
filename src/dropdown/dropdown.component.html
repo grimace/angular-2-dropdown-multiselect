@@ -19,7 +19,7 @@
             </label>
         </span>
         <li class="mdropdown-item check-control check-control-check" *ngIf="settings.showResetAll">
-          <a href="javascript:;" role="menuitem" tabindex="-1" (click)="resetAll()">
+          <a href="javascript:;" role="menuitem" tabindex="-1" (click)="reset()">
             <span style="width: 16px;" [ngClass]="{'glyphicon glyphicon-ok': settings.checkedStyle !== 'fontawesome','fa fa-check': settings.checkedStyle === 'fontawesome'}"></span> {{ texts.resetAll }}
           </a>
         </li>
