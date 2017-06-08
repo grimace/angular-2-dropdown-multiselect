@@ -72,9 +72,16 @@
       <span class="radioGroup" *ngIf='option.type == "group"'>
         <label class="radioLabel" *ngFor="let item of option.radioGroup" (click)="updateRadio($event, option, item)">
             <input class="radioButton" type="radio" name="{{option.name}}" (click)="updateRadio($event, option, item)" [checked]="item.on">
-            {{item.name}}
+            {{ item.name }}
         </label>
       </span>
+
+
+      <!-- <span class="slider" *ngIf='option.type == "slider"'> -->
+          <!-- {{ option.name }} is a slider. -->
+          <!-- <nouislider [min]="sliderMin" [max]="sliderMax" [step]="sliderStep" [(ngModel)]="sliderValue" (ngModelChange)="sliderChange($event)" [connect]="true" [disabled]="disabled"></nouislider> -->
+      <!-- </span> -->
+
 
     </li>
   </ul>
