@@ -20,6 +20,7 @@ export interface IMultiSelectOptionGroup {
   heading?: string;
   open?: boolean;
   content?: any [];
+  lastModified?: Date;
 
 }
 

@@ -7,14 +7,13 @@
         <li class="mdropdown-item search">
           <div class="input-group">
             <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-search"></i></span>
-            <input id="searchText" type="text" class="form-control" placeholder="{{ texts.searchPlaceholder }}" aria-describedby="sizing-addon2" (ngModelChange)="search($event)" [(ngModel)]="searchFilterText" [ngModelOptions]="{ standalone: true, debounce: 1000 }" autofocus>
+            <input id="searchText" type="text" class="form-control" placeholder="{{ texts.searchPlaceholder }}" aria-describedby="sizing-addon2" (ngModelChange)="search($event)" [ngModelOptions]="{ standalone: true, debounce: 3000 }" [(ngModel)]="searchFilterText"  autofocus>
           </div>
         </li>
         <!-- <li class="dropdown-divider divider"></li> -->
         <span class="boolean-check" *ngIf="settings.operators">
             <label class="radioLabel" *ngFor="let item of settings.operators">
-                <input class="radioButton" type="radio" name="booleans" (click)="settings.operator = item.value"
-                 [checked]="settings.operator === item.value">
+                <input class="radioButton" type="radio" name="booleans" (click)="updateOperator(item.value)" [checked]="settings.operator === item.value">
                 {{item.name}}
             </label>
         </span>
@@ -43,7 +42,7 @@
     <li class="mdropdown-item" [ngStyle]="getItemStyle(option)" *ngFor="let option of group.options" [class.dropdown-header]='option.type == "label"'>
       <ng-template [ngIf]='option.type == "label"'>{{ option.name }}</ng-template>
 
-      <a *ngIf='option.type == "checkbox"' (click)='setSelected($event, option)' role="menuitem" tabindex="-1" [style.padding-left]="this.parents.length>0&&this.parents.indexOf(option.id)<0&&'30px'">
+      <a *ngIf='option.type == "checkbox"' (click)='toggleSelected($event, group, option)' role="menuitem" tabindex="-1" [style.padding-left]="this.parents.length>0&&this.parents.indexOf(option.id)<0&&'30px'">
         <input *ngIf="settings.checkedStyle === 'checkboxes'" type="checkbox" [checked]="option.on" (click)="preventCheckboxCheck($event, option)" [disabled]="isDisabled(option)"/>
         <span *ngIf="settings.checkedStyle === 'glyphicon'" style="width: 16px;" class="glyphicon" [class.glyphicon-ok]="isSelected(option)"></span>
         <span *ngIf="settings.checkedStyle === 'fontawesome'" style="width: 16px;display: inline-block;">
@@ -56,7 +55,7 @@
       </a>
 
       <span *ngIf='option.type == "guardgroup"' class="guardGroup">
-        <a *ngFor="let item of option.group" (click)="updateGuard($event, option, item)" role="menuitem" tabindex="-1" [style.padding-left]="this.parents.length>0&&this.parents.indexOf(option.id)<0&&'30px'">
+        <a *ngFor="let item of option.group" (click)="updateGuard($event, group, option, item)" role="menuitem" tabindex="-1" [style.padding-left]="this.parents.length>0&&this.parents.indexOf(option.id)<0&&'30px'">
           <input *ngIf="settings.checkedStyle === 'checkboxes'" type="checkbox" [checked]="item.on"  (click)="preventCheckboxCheck($event, option)" [disabled]="isDisabled(item)"/>
           <span *ngIf="settings.checkedStyle === 'glyphicon'" style="width: 16px;" class="glyphicon" [class.glyphicon-ok]="isSelected(option)"></span>
           <span *ngIf="settings.checkedStyle === 'fontawesome'" style="width: 16px;display: inline-block;">
@@ -70,8 +69,8 @@
       </span>
 
       <span class="radioGroup" *ngIf='option.type == "group"'>
-        <label class="radioLabel" *ngFor="let item of option.radioGroup" (click)="updateRadio($event, option, item)">
-            <input class="radioButton" type="radio" name="{{option.name}}" (click)="updateRadio($event, option, item)" [checked]="item.on">
+        <label class="radioLabel" *ngFor="let item of option.radioGroup" (click)="updateRadio($event, group, option, item)">
+            <input class="radioButton" type="radio" name="{{option.name}}" (click)="updateRadio($event, group, option, item)" [checked]="item.on">
             {{ item.name }}
         </label>
       </span>
