@@ -22,7 +22,6 @@ import {
 } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR, Validator } from '@angular/forms';
 import { Accordion, AccordionGroup } from './accordion/accordion.component';
-import { NouisliderModule } from 'ng2-nouislider';
 
 const MULTISELECT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,

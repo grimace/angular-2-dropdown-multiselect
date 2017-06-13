@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Accordion, AccordionGroup } from './accordion/accordion.component';
-import { NouisliderModule } from 'ng2-nouislider';
 
 @NgModule({
   imports: [CommonModule, FormsModule],
