@@ -87,4 +87,7 @@ export class AccordionGroup implements OnDestroy {
     event.stopPropagation();
     this.isOpen = !this.isOpen;
   }
+  get isModified() {
+     return false;
+  }
 }
