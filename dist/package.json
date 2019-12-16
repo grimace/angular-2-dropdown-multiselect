@@ -7,22 +7,22 @@
   "typings": "index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/softsimon/angular-2-dropdown-multiselect.git"
+    "url": "git+https://github.com/grimace/angular-2-dropdown-multiselect.git"
   },
   "keywords": [
     "angular 2",
     "dropdown",
     "multi select"
   ],
-  "author": "Simon Lindh",
+  "author": "Grimace forked from Simon Lindh",
   "contributors": [
-    "Alex Malkevich <malkevich.alex@gmail.com>"
+    "grimace"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/softsimon/angular-2-dropdown-multiselect/issues"
+    "url": "https://github.com/grimace/angular-2-dropdown-multiselect/issues"
   },
-  "homepage": "http://softsimon.github.io/angular-2-dropdown-multiselect",
+  "homepage": "http://grimace.github.io/angular-2-dropdown-multiselect",
   "dependencies": {},
   "peerDependencies": {
     "@angular/common": "^4.0.0",
