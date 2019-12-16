@@ -13,4 +13,5 @@ export declare class AccordionGroup implements OnDestroy {
     constructor(accordion: Accordion);
     ngOnDestroy(): void;
     toggleOpen(event: MouseEvent): void;
+    readonly isModified: boolean;
 }

@@ -60,6 +60,13 @@ var AccordionGroup = (function () {
         event.stopPropagation();
         this.isOpen = !this.isOpen;
     };
+    Object.defineProperty(AccordionGroup.prototype, "isModified", {
+        get: function () {
+            return false;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return AccordionGroup;
 }());
 export { AccordionGroup };
