@@ -36,12 +36,12 @@ a {
   align-items: flex-start;
   text-align: center;
   justify-content: center;
-  background-color: #c1e2ed;
+  /* background-color: #c1e2ed; */
   border-radius: 4px;
   border-color: transparent;
   border-width: 1px;
-  width: 100px;
-  height: 40px;
+  /* width: 100px;
+  height: 40px; */
   font-size: 16px;
 }
 
