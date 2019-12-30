@@ -69,6 +69,7 @@ export interface IMultiSelectSettings {
     dropdownSettings?: IMultiSelectSettings;
     operators?: any[];
     operator?: string;
+    exButtonId?: string;
 }
 export interface IMultiSelectTexts {
     checkAll?: string;
