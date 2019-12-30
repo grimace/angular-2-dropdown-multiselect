@@ -1,6 +1,6 @@
 <div class="dropdown" [ngClass]="settings.containerClasses" [class.open]="isVisible">
 
-  <button type="button" class="dropdown-toggle" [ngClass]="settings.buttonClasses" (click)="toggleDropdown()" [disabled]="disabled">{{ title }}<span class="caret"></span></button>
+    <button *ngIf="!settings.exButtonId" type="button" class="dropdown-toggle" [ngClass]="settings.buttonClasses" (click)="toggleDropdown()" [disabled]="disabled">{{ title }}<span class="caret"></span></button>
 
     <accordion *ngIf="isVisible" class="dropdown-menu" class ="wrapper left container">
       <ul [class.pull-right]="settings.pullRight" [class.dropdown-menu-right]="settings.pullRight" [style.max-height]="settings.maxHeight" class="sublist">
