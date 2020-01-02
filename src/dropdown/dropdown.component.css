@@ -82,8 +82,8 @@ a {
   display: inline-block;
 }
 .check-control {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 1vh;
+  /* margin-right: 10px; */
 }
 
 #searchText {
