@@ -46,13 +46,13 @@ a {
 }
 
 .sublist {
-  display: block;
+  /* display: block; */
   height: auto;
   overflow-y: auto;
   max-width: 90%;
   box-sizing: border-box;
-  padding-left: 40px;
-  padding-top: 10px;
+  /* padding-left: 40px;
+  padding-top: 10px; */
 }
 
 .mdropdown-item {
