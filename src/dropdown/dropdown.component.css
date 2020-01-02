@@ -87,8 +87,8 @@ a {
 }
 
 #searchText {
-  min-height: 34px;
-  margin-top: 11px;
+  min-height: 20px;
+  /* margin-top: 11px; */
 }
 
 .input-group-addon {
