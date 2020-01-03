@@ -204,7 +204,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   }
 
   clearSearch(event: Event) {
-    event.stopPropagation();
+    if (event) event.stopPropagation();
     this.searchFilterText = '';
   }
 

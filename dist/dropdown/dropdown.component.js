@@ -145,7 +145,8 @@ var MultiselectDropdown = (function () {
         throw new Error('Method not implemented.');
     };
     MultiselectDropdown.prototype.clearSearch = function (event) {
-        event.stopPropagation();
+        if (event)
+            event.stopPropagation();
         this.searchFilterText = '';
     };
     MultiselectDropdown.prototype.toggleDropdown = function () {
