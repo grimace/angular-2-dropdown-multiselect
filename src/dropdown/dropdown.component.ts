@@ -22,6 +22,7 @@ import {
 } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR, Validator } from '@angular/forms';
 import { Accordion, AccordionGroup } from './accordion/accordion.component';
+import * as LD from 'lodash';
 
 const MULTISELECT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -38,10 +39,13 @@ const MULTISELECT_VALUE_ACCESSOR: any = {
 export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlValueAccessor, Validator {
 
   @Input() options: Array<IMultiSelectOption>;
-  @Input() groups: Array<IMultiSelectOptionGroup>;
+  // @Input() groups: Array<IMultiSelectOptionGroup>;
+  @Input() defaultGroups: Array<IMultiSelectOptionGroup>;
   @Input() settings: IMultiSelectSettings;
   @Input() texts: IMultiSelectTexts;
   @Input() disabled: boolean = false;
+
+  groups: Array<IMultiSelectOptionGroup>;
 
   @Output() selectionLimitReached = new EventEmitter();
   @Output() dropdownClosed = new EventEmitter();
@@ -134,9 +138,16 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   }
 
   ngOnInit() {
-    this.settings = Object.assign(this.defaultSettings, this.settings);
-    this.texts = Object.assign(this.defaultTexts, this.texts);
+
+    // this.settings = Object.assign(this.defaultSettings, this.settings);
+    this.settings = LD.cloneDeep(this.defaultSettings);
+    // this.texts = Object.assign(this.defaultTexts, this.texts);
+    this.texts = LD.cloneDeep(this.defaultTexts);
+    this.groups = LD.cloneDeep(this.defaultGroups);
     this.title = this.texts.defaultTitle || '';
+
+
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -185,8 +196,8 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
 
   ngDoCheck() {
     const changes = this.differ.diff(this.model);
-    console.log('dropdownComponent changes : ',changes);
     if (changes) {
+      console.log('dropdownComponent changed : ',changes);
       this.updateNumSelected();
       this.updateTitle();
     }

@@ -8,6 +8,7 @@ import { MultiSelectSearchFilter } from './search-filter.pipe';
 import { GUARDTYPE } from './types';
 import { Component, ElementRef, EventEmitter, forwardRef, HostListener, Input, IterableDiffers, Output } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import * as LD from 'lodash';
 var MULTISELECT_VALUE_ACCESSOR = {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(function () { return MultiselectDropdown; }),
@@ -90,8 +91,11 @@ var MultiselectDropdown = (function () {
         }
     };
     MultiselectDropdown.prototype.ngOnInit = function () {
-        this.settings = Object.assign(this.defaultSettings, this.settings);
-        this.texts = Object.assign(this.defaultTexts, this.texts);
+        // this.settings = Object.assign(this.defaultSettings, this.settings);
+        this.settings = LD.cloneDeep(this.defaultSettings);
+        // this.texts = Object.assign(this.defaultTexts, this.texts);
+        this.texts = LD.cloneDeep(this.defaultTexts);
+        this.groups = LD.cloneDeep(this.defaultGroups);
         this.title = this.texts.defaultTitle || '';
     };
     MultiselectDropdown.prototype.ngOnChanges = function (changes) {
@@ -129,8 +133,8 @@ var MultiselectDropdown = (function () {
     };
     MultiselectDropdown.prototype.ngDoCheck = function () {
         var changes = this.differ.diff(this.model);
-        console.log('dropdownComponent changes : ', changes);
         if (changes) {
+            console.log('dropdownComponent changed : ', changes);
             this.updateNumSelected();
             this.updateTitle();
         }
@@ -611,7 +615,7 @@ MultiselectDropdown.ctorParameters = function () { return [
 ]; };
 MultiselectDropdown.propDecorators = {
     'options': [{ type: Input },],
-    'groups': [{ type: Input },],
+    'defaultGroups': [{ type: Input },],
     'settings': [{ type: Input },],
     'texts': [{ type: Input },],
     'disabled': [{ type: Input },],

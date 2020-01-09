@@ -23,7 +23,9 @@
     "url": "https://github.com/grimace/angular-2-dropdown-multiselect/issues"
   },
   "homepage": "http://grimace.github.io/angular-2-dropdown-multiselect",
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "^4.17.15"
+  },
   "peerDependencies": {
     "@angular/common": "^4.0.0",
     "@angular/core": "^4.0.0",

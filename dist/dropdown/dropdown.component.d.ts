@@ -4,10 +4,11 @@ import { AbstractControl, ControlValueAccessor, Validator } from '@angular/forms
 export declare class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlValueAccessor, Validator {
     private element;
     options: Array<IMultiSelectOption>;
-    groups: Array<IMultiSelectOptionGroup>;
+    defaultGroups: Array<IMultiSelectOptionGroup>;
     settings: IMultiSelectSettings;
     texts: IMultiSelectTexts;
     disabled: boolean;
+    groups: Array<IMultiSelectOptionGroup>;
     selectionLimitReached: EventEmitter<{}>;
     dropdownClosed: EventEmitter<{}>;
     dropdownOpened: EventEmitter<{}>;
