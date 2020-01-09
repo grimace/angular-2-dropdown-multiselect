@@ -18,6 +18,7 @@ var MultiselectDropdown = (function () {
     // debouncer:Subject<string> = new Subject<string>();
     function MultiselectDropdown(element, differs) {
         this.element = element;
+        this.differs = differs;
         this.disabled = false;
         this.selectionLimitReached = new EventEmitter();
         this.dropdownClosed = new EventEmitter();
@@ -65,7 +66,6 @@ var MultiselectDropdown = (function () {
         this.onModelChange = function (_) { };
         this.onModelTouched = function () { };
         console.log('a2 constructor()');
-        this.differ = differs.find([]).create(null);
     }
     MultiselectDropdown.prototype.onClick = function (target) {
         if (!this.isVisible)
@@ -97,6 +97,7 @@ var MultiselectDropdown = (function () {
         this.texts = LD.cloneDeep(this.defaultTexts);
         this.defaultGroups = LD.cloneDeep(this.groups);
         this.title = this.texts.defaultTitle || '';
+        this.differ = this.differs.find(this.defaultGroups).create(null);
     };
     MultiselectDropdown.prototype.ngOnChanges = function (changes) {
         if (changes['options']) {
@@ -132,7 +133,8 @@ var MultiselectDropdown = (function () {
         this.disabled = isDisabled;
     };
     MultiselectDropdown.prototype.ngDoCheck = function () {
-        var changes = this.differ.diff(this.model);
+        // const changes = this.differ.diff(this.model);
+        var changes = this.differ.diff(this.groups);
         if (changes) {
             console.log('dropdownComponent changed : ', changes);
             this.updateNumSelected();

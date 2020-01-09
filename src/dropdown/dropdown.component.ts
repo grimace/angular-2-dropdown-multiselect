@@ -122,9 +122,8 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   };
   // debouncer:Subject<string> = new Subject<string>();
 
-  constructor(private element: ElementRef, differs: IterableDiffers) {
+  constructor(private element: ElementRef, private differs: IterableDiffers) {
     console.log('a2 constructor()');
-    this.differ = differs.find([]).create(null);
   }
 
   // search(event) {
@@ -145,8 +144,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
     this.texts = LD.cloneDeep(this.defaultTexts);
     this.defaultGroups = LD.cloneDeep(this.groups);
     this.title = this.texts.defaultTitle || '';
-
-
+    this.differ = this.differs.find(this.defaultGroups).create(null);
 
   }
 
@@ -195,7 +193,8 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   }
 
   ngDoCheck() {
-    const changes = this.differ.diff(this.model);
+    // const changes = this.differ.diff(this.model);
+    const changes = this.differ.diff(this.groups);
     if (changes) {
       console.log('dropdownComponent changed : ',changes);
       this.updateNumSelected();

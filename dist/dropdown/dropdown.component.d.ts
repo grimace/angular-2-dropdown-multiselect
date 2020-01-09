@@ -3,6 +3,7 @@ import { DoCheck, ElementRef, EventEmitter, IterableDiffers, OnChanges, OnInit, 
 import { AbstractControl, ControlValueAccessor, Validator } from '@angular/forms';
 export declare class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlValueAccessor, Validator {
     private element;
+    private differs;
     options: Array<IMultiSelectOption>;
     groups: Array<IMultiSelectOptionGroup>;
     settings: IMultiSelectSettings;
