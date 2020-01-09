@@ -615,7 +615,7 @@ MultiselectDropdown.ctorParameters = function () { return [
 ]; };
 MultiselectDropdown.propDecorators = {
     'options': [{ type: Input },],
-    'defaultGroups': [{ type: Input },],
+    'defaultGroups': [{ type: Input, args: ['groups',] },],
     'settings': [{ type: Input },],
     'texts': [{ type: Input },],
     'disabled': [{ type: Input },],

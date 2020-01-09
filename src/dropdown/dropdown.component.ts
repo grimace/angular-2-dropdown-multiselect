@@ -40,7 +40,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
 
   @Input() options: Array<IMultiSelectOption>;
   // @Input() groups: Array<IMultiSelectOptionGroup>;
-  @Input() defaultGroups: Array<IMultiSelectOptionGroup>;
+  @Input('groups') defaultGroups: Array<IMultiSelectOptionGroup>;
   @Input() settings: IMultiSelectSettings;
   @Input() texts: IMultiSelectTexts;
   @Input() disabled: boolean = false;
