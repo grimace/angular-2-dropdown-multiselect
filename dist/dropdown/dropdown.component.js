@@ -95,7 +95,7 @@ var MultiselectDropdown = (function () {
         this.settings = LD.cloneDeep(this.defaultSettings);
         // this.texts = Object.assign(this.defaultTexts, this.texts);
         this.texts = LD.cloneDeep(this.defaultTexts);
-        this.groups = LD.cloneDeep(this.defaultGroups);
+        this.defaultGroups = LD.cloneDeep(this.groups);
         this.title = this.texts.defaultTitle || '';
     };
     MultiselectDropdown.prototype.ngOnChanges = function (changes) {
@@ -615,7 +615,7 @@ MultiselectDropdown.ctorParameters = function () { return [
 ]; };
 MultiselectDropdown.propDecorators = {
     'options': [{ type: Input },],
-    'defaultGroups': [{ type: Input, args: ['groups',] },],
+    'groups': [{ type: Input, args: ['groups',] },],
     'settings': [{ type: Input },],
     'texts': [{ type: Input },],
     'disabled': [{ type: Input },],

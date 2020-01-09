@@ -17244,7 +17244,7 @@ var MultiselectDropdown = (function () {
         this.settings = undefined(this.defaultSettings);
         // this.texts = Object.assign(this.defaultTexts, this.texts);
         this.texts = undefined(this.defaultTexts);
-        this.groups = undefined(this.defaultGroups);
+        this.defaultGroups = undefined(this.groups);
         this.title = this.texts.defaultTitle || '';
     };
     MultiselectDropdown.prototype.ngOnChanges = function (changes) {
@@ -17763,7 +17763,7 @@ MultiselectDropdown.ctorParameters = function () { return [
 ]; };
 MultiselectDropdown.propDecorators = {
     'options': [{ type: _angular_core.Input },],
-    'defaultGroups': [{ type: _angular_core.Input, args: ['groups',] },],
+    'groups': [{ type: _angular_core.Input, args: ['groups',] },],
     'settings': [{ type: _angular_core.Input },],
     'texts': [{ type: _angular_core.Input },],
     'disabled': [{ type: _angular_core.Input },],

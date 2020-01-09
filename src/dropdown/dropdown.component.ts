@@ -40,12 +40,12 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
 
   @Input() options: Array<IMultiSelectOption>;
   // @Input() groups: Array<IMultiSelectOptionGroup>;
-  @Input('groups') defaultGroups: Array<IMultiSelectOptionGroup>;
+  @Input('groups') groups: Array<IMultiSelectOptionGroup>;
   @Input() settings: IMultiSelectSettings;
   @Input() texts: IMultiSelectTexts;
   @Input() disabled: boolean = false;
 
-  groups: Array<IMultiSelectOptionGroup>;
+  defaultGroups: Array<IMultiSelectOptionGroup>;
 
   @Output() selectionLimitReached = new EventEmitter();
   @Output() dropdownClosed = new EventEmitter();
@@ -143,7 +143,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
     this.settings = LD.cloneDeep(this.defaultSettings);
     // this.texts = Object.assign(this.defaultTexts, this.texts);
     this.texts = LD.cloneDeep(this.defaultTexts);
-    this.groups = LD.cloneDeep(this.defaultGroups);
+    this.defaultGroups = LD.cloneDeep(this.groups);
     this.title = this.texts.defaultTitle || '';
 
 
