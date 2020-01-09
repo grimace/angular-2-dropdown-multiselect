@@ -13,7 +13,6 @@ export declare class MultiselectDropdown implements OnInit, OnChanges, DoCheck, 
     dropdownOpened: EventEmitter<{}>;
     onAdded: EventEmitter<{}>;
     onRemoved: EventEmitter<{}>;
-    searchChanged: EventEmitter<{}>;
     operatorChanged: EventEmitter<{}>;
     resetAll: EventEmitter<{}>;
     onClick(target: HTMLElement): void;
@@ -28,7 +27,6 @@ export declare class MultiselectDropdown implements OnInit, OnChanges, DoCheck, 
     defaultSettings: IMultiSelectSettings;
     defaultTexts: IMultiSelectTexts;
     constructor(element: ElementRef, differs: IterableDiffers);
-    search(event: any): void;
     getItemStyle(option: IMultiSelectOption): any;
     ngOnInit(): void;
     ngOnChanges(changes: SimpleChanges): void;

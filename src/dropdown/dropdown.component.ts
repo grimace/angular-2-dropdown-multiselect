@@ -49,7 +49,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   @Output() onAdded = new EventEmitter();
   @Output() onRemoved = new EventEmitter();
 
-  @Output() searchChanged = new EventEmitter();
+  // @Output() searchChanged = new EventEmitter();
 
 
   @Output() operatorChanged = new EventEmitter();
@@ -113,7 +113,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
     checked: 'checked',
     checkedPlural: 'checked',
     searchPlaceholder: 'Search...',
-    defaultTitle: 'Select',
+    defaultTitle: 'Filters',
     allSelected: 'All selected',
   };
   // debouncer:Subject<string> = new Subject<string>();
@@ -123,9 +123,9 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
     this.differ = differs.find([]).create(null);
   }
 
-  search(event) {
-    this.searchChanged.emit(event);
-  }
+  // search(event) {
+  //   this.searchChanged.emit(event);
+  // }
 
   getItemStyle(option: IMultiSelectOption): any {
     if (option.type == "checkbox") {
