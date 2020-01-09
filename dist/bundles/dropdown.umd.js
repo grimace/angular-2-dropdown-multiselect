@@ -166,6 +166,7 @@ var MultiselectDropdown = (function () {
     };
     MultiselectDropdown.prototype.ngDoCheck = function () {
         var changes = this.differ.diff(this.model);
+        console.log('dropdownComponent changes : ', changes);
         if (changes) {
             this.updateNumSelected();
             this.updateTitle();
