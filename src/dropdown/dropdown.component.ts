@@ -32,7 +32,7 @@ const MULTISELECT_VALUE_ACCESSOR: any = {
 @Component({
   selector: 'ss-multiselect-dropdown',
   templateUrl: './dropdown.component.html',
-  styleUrls: ['./dropdown.component.css', './accordion/accordion.component.css'],
+  styleUrls: [ './dropdown.component.css', './accordion/accordion.component.css'],
   providers: [MULTISELECT_VALUE_ACCESSOR]
 })
 export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlValueAccessor, Validator {
@@ -52,7 +52,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   // @Output() searchChanged = new EventEmitter();
 
 
-  @Output() operatorChanged = new EventEmitter();
+  // @Output() operatorChanged = new EventEmitter();
   @Output() resetAll = new EventEmitter();
 
 
@@ -639,12 +639,11 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
 
   }
 
-  updateOperator(value) {
-      console.log('a2 setting operator to : '+value);
-      this.settings.operator = value;
-      this.operatorChanged.emit(value);
-      // this.onModelChange(this.model);
-  }
+  // updateOperator(value) {
+  //     console.log('a2 setting operator to : '+value);
+  //     this.settings.operator = value;
+  //     this.operatorChanged.emit(value);
+  // }
 
   updateGuard( event, group: IMultiSelectOptionGroup, option, item:IMultiSelectOption ) {
 

@@ -13,7 +13,6 @@ export declare class MultiselectDropdown implements OnInit, OnChanges, DoCheck, 
     dropdownOpened: EventEmitter<{}>;
     onAdded: EventEmitter<{}>;
     onRemoved: EventEmitter<{}>;
-    operatorChanged: EventEmitter<{}>;
     resetAll: EventEmitter<{}>;
     onClick(target: HTMLElement): void;
     model: any[];
@@ -66,6 +65,5 @@ export declare class MultiselectDropdown implements OnInit, OnChanges, DoCheck, 
     clearGuardItems(option: any): void;
     updateCollectiveGuard(event: any, option: any, item: IMultiSelectOption): void;
     updatePreventGuard(event: any, option: any, item: IMultiSelectOption): void;
-    updateOperator(value: any): void;
     updateGuard(event: any, group: IMultiSelectOptionGroup, option: any, item: IMultiSelectOption): void;
 }
