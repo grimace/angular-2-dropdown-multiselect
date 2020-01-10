@@ -15,6 +15,8 @@ import {
   HostListener,
   Input,
   IterableDiffers,
+  KeyValueDiffers,
+  KeyValueDiffer,
   OnChanges,
   OnInit,
   Output,
@@ -45,7 +47,8 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   @Input() texts: IMultiSelectTexts;
   @Input() disabled: boolean = false;
 
-  defaultGroups: Array<IMultiSelectOptionGroup>;
+  // defaultGroups: Array<IMultiSelectOptionGroup>;
+  private objDiffers: Array<KeyValueDiffer<string, any>>;
 
   @Output() selectionLimitReached = new EventEmitter();
   @Output() dropdownClosed = new EventEmitter();
@@ -122,7 +125,9 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   };
   // debouncer:Subject<string> = new Subject<string>();
 
-  constructor(private element: ElementRef, private differs: IterableDiffers) {
+
+  // constructor(private element: ElementRef, private differs: IterableDiffers) {
+  constructor(private element: ElementRef, private differs: KeyValueDiffers) {
     console.log('a2 constructor()');
   }
 
@@ -142,9 +147,16 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
     this.settings = LD.cloneDeep(this.defaultSettings);
     // this.texts = Object.assign(this.defaultTexts, this.texts);
     this.texts = LD.cloneDeep(this.defaultTexts);
-    this.defaultGroups = LD.cloneDeep(this.groups);
+    // this.defaultGroups = LD.cloneDeep(this.groups);
     this.title = this.texts.defaultTitle || '';
-    this.differ = this.differs.find(this.defaultGroups).create(null);
+
+    this.objDiffers = new Array<KeyValueDiffer<string, any>>();
+    this.groups.forEach((itemGroup, index) => {
+         this.objDiffers[index] = this.differs.find(itemGroup).create();
+    });
+
+
+    // this.differ = this.differs.find(this.groups).create(null);
 
   }
 
@@ -194,12 +206,23 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
 
   ngDoCheck() {
     // const changes = this.differ.diff(this.model);
-    const changes = this.differ.diff(this.groups);
-    if (changes) {
-      console.log('dropdownComponent changed : ',changes);
-      this.updateNumSelected();
-      this.updateTitle();
-    }
+    this.groups.forEach((itemGroup, index) => {
+         const objDiffer = this.objDiffers[index];
+         const objChanges = objDiffer.diff(itemGroup);
+         if (objChanges) {
+           objChanges.forEachChangedItem((changedItem) => {
+             console.log(changedItem.key);
+           });
+         }
+   });
+
+
+    // const changes = this.differ.diff(this.groups);
+    // if (changes) {
+    //   console.log('dropdownComponent changed : ',changes);
+    //   this.updateNumSelected();
+    //   this.updateTitle();
+    // }
   }
 
   validate(_c: AbstractControl): { [key: string]: any; } {

@@ -17165,6 +17165,7 @@ var MULTISELECT_VALUE_ACCESSOR = {
 };
 var MultiselectDropdown = (function () {
     // debouncer:Subject<string> = new Subject<string>();
+    // constructor(private element: ElementRef, private differs: IterableDiffers) {
     function MultiselectDropdown(element, differs) {
         this.element = element;
         this.differs = differs;
@@ -17240,13 +17241,18 @@ var MultiselectDropdown = (function () {
         }
     };
     MultiselectDropdown.prototype.ngOnInit = function () {
+        var _this = this;
         // this.settings = Object.assign(this.defaultSettings, this.settings);
         this.settings = undefined(this.defaultSettings);
         // this.texts = Object.assign(this.defaultTexts, this.texts);
         this.texts = undefined(this.defaultTexts);
-        this.defaultGroups = undefined(this.groups);
+        // this.defaultGroups = LD.cloneDeep(this.groups);
         this.title = this.texts.defaultTitle || '';
-        this.differ = this.differs.find(this.defaultGroups).create(null);
+        this.objDiffers = new Array();
+        this.groups.forEach(function (itemGroup, index) {
+            _this.objDiffers[index] = _this.differs.find(itemGroup).create();
+        });
+        // this.differ = this.differs.find(this.groups).create(null);
     };
     MultiselectDropdown.prototype.ngOnChanges = function (changes) {
         if (changes['options']) {
@@ -17282,13 +17288,23 @@ var MultiselectDropdown = (function () {
         this.disabled = isDisabled;
     };
     MultiselectDropdown.prototype.ngDoCheck = function () {
+        var _this = this;
         // const changes = this.differ.diff(this.model);
-        var changes = this.differ.diff(this.groups);
-        if (changes) {
-            console.log('dropdownComponent changed : ', changes);
-            this.updateNumSelected();
-            this.updateTitle();
-        }
+        this.groups.forEach(function (itemGroup, index) {
+            var objDiffer = _this.objDiffers[index];
+            var objChanges = objDiffer.diff(itemGroup);
+            if (objChanges) {
+                objChanges.forEachChangedItem(function (changedItem) {
+                    console.log(changedItem.key);
+                });
+            }
+        });
+        // const changes = this.differ.diff(this.groups);
+        // if (changes) {
+        //   console.log('dropdownComponent changed : ',changes);
+        //   this.updateNumSelected();
+        //   this.updateTitle();
+        // }
     };
     MultiselectDropdown.prototype.validate = function (_c) {
         return (this.model && this.model.length) ? null : {
@@ -17761,7 +17777,7 @@ MultiselectDropdown.decorators = [
 /** @nocollapse */
 MultiselectDropdown.ctorParameters = function () { return [
     { type: _angular_core.ElementRef, },
-    { type: _angular_core.IterableDiffers, },
+    { type: _angular_core.KeyValueDiffers, },
 ]; };
 MultiselectDropdown.propDecorators = {
     'options': [{ type: _angular_core.Input },],

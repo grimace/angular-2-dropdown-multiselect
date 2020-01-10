@@ -1,5 +1,5 @@
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts, IMultiSelectOptionGroup } from './types';
-import { DoCheck, ElementRef, EventEmitter, IterableDiffers, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { DoCheck, ElementRef, EventEmitter, KeyValueDiffers, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, Validator } from '@angular/forms';
 export declare class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlValueAccessor, Validator {
     private element;
@@ -9,7 +9,7 @@ export declare class MultiselectDropdown implements OnInit, OnChanges, DoCheck, 
     settings: IMultiSelectSettings;
     texts: IMultiSelectTexts;
     disabled: boolean;
-    defaultGroups: Array<IMultiSelectOptionGroup>;
+    private objDiffers;
     selectionLimitReached: EventEmitter<{}>;
     dropdownClosed: EventEmitter<{}>;
     dropdownOpened: EventEmitter<{}>;
@@ -27,7 +27,7 @@ export declare class MultiselectDropdown implements OnInit, OnChanges, DoCheck, 
     searchFilterText: string;
     defaultSettings: IMultiSelectSettings;
     defaultTexts: IMultiSelectTexts;
-    constructor(element: ElementRef, differs: IterableDiffers);
+    constructor(element: ElementRef, differs: KeyValueDiffers);
     getItemStyle(option: IMultiSelectOption): any;
     ngOnInit(): void;
     ngOnChanges(changes: SimpleChanges): void;
