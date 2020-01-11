@@ -3,9 +3,11 @@
     <h4 class="panel-title">
       <a href tabindex="0">
         <span class=" mdropdown-item dropdown-header">
-        <img *ngIf="_isOpen" class="twistie" src="assets/icons/twistie_on.png">
-        <img *ngIf="!_isOpen" class="twistie" src="assets/icons/twistie_off.png">
-        {{heading}}
+
+        <!-- <img *ngIf="_isOpen" class="twistie" src="assets/icons/twistie_on.png">
+        <img *ngIf="!_isOpen" class="twistie" src="assets/icons/twistie_off.png"> -->
+        <img *ngIf="!_isOpen" class="twistie" src="getToggleImage()">
+        {{group.heading}}
         </span>
       </a>
     </h4>

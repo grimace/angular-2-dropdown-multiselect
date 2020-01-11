@@ -43,6 +43,7 @@ var AccordionGroup = (function () {
         get: function () {
             return this._isOpen;
         },
+        // @Input() heading: string;
         set: function (value) {
             this._isOpen = value;
             if (value) {
@@ -60,21 +61,39 @@ var AccordionGroup = (function () {
         event.stopPropagation();
         this.isOpen = !this.isOpen;
     };
-    Object.defineProperty(AccordionGroup.prototype, "isModified", {
-        get: function () {
-            return false;
-        },
-        enumerable: true,
-        configurable: true
-    });
+    AccordionGroup.prototype.isModified = function () {
+        var modified = false;
+        if (this.group.changeCount && this.group.changeCount > 0) {
+            modified = true;
+        }
+        return false;
+    };
+    AccordionGroup.prototype.getToggleImage = function () {
+        var src;
+        if (this.isModified()) {
+            if (this.isOpen) {
+                src = "assets/icons/twistie_on.png";
+            }
+            else {
+                src = "assets/icons/twistie_off.png";
+            }
+        }
+        else {
+            if (this.isOpen) {
+                src = "assets/icons/twistie_on_blue.png";
+            }
+            else {
+                src = "assets/icons/twistie_off_blue.png";
+            }
+        }
+    };
     return AccordionGroup;
 }());
 export { AccordionGroup };
 AccordionGroup.decorators = [
     { type: Component, args: [{
                 selector: 'accordion-group',
-                // templateUrl: './accordion.component.html',
-                template: "<div class=\"panel panel-default\" [ngClass]=\"{'panel-open': isOpen}\">\n    <div class=\"panel-heading\" (click)=\"toggleOpen($event)\">\n      <h4 class=\"panel-title\">\n        <a href tabindex=\"0\">\n          <span class=\"mdropdown-item dropdown-header\">\n          <img *ngIf=\"_isOpen\" class=\"twistie\" src=\"assets/icons/twistie_on.png\">\n          <img *ngIf=\"!_isOpen\" class=\"twistie\" src=\"assets/icons/twistie_off.png\">\n          {{heading}}\n          </span>\n        </a>\n      </h4>\n    </div>\n    <div class=\"panel-collapse\" [hidden]=\"!isOpen\">\n      <div class=\"panel-body\">\n          <ng-content></ng-content>\n      </div>\n    </div>\n  </div>"
+                templateUrl: './accordion.component.html',
             },] },
 ];
 /** @nocollapse */
@@ -82,7 +101,7 @@ AccordionGroup.ctorParameters = function () { return [
     { type: Accordion, },
 ]; };
 AccordionGroup.propDecorators = {
-    'heading': [{ type: Input },],
+    'group': [{ type: Input },],
     'isOpen': [{ type: Input },],
 };
 //# sourceMappingURL=accordion.component.js.map

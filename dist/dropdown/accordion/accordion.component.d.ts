@@ -8,10 +8,11 @@ export declare class Accordion {
 export declare class AccordionGroup implements OnDestroy {
     private accordion;
     _isOpen: boolean;
-    heading: string;
+    group: any;
     isOpen: boolean;
     constructor(accordion: Accordion);
     ngOnDestroy(): void;
     toggleOpen(event: MouseEvent): void;
-    readonly isModified: boolean;
+    isModified(): boolean;
+    getToggleImage(): void;
 }
