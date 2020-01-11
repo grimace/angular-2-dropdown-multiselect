@@ -103,11 +103,11 @@ var MultiselectDropdown = (function () {
         this.texts = LD.cloneDeep(this.defaultTexts);
         // this.defaultGroups = LD.cloneDeep(this.groups);
         this.title = this.texts.defaultTitle || '';
-        this.objDiffers = new Array();
+        // this.objDiffers = new Array<KeyValueDiffer<string, any>>();
         console.log('setting differs on groups : ', this.groups.length);
         this.defaultGroups = LD.cloneDeep(this.groups);
         this.groups.forEach(function (itemGroup, index) {
-            _this.modifiedStates.push({ name: itemGroup.name, modified: false });
+            _this.modifiedStates.push({ name: itemGroup.heading, modified: false });
             // this.objDiffers[index] = this.differs.find([itemGroup]).create();
             // this.objDiffers[index] = this.differs.find(itemGroup.options).create();
             // console.log('adding differ for group : ',itemGroup.name, ' , differ : ', this.objDiffers[index]);

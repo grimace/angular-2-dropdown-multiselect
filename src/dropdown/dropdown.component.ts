@@ -157,13 +157,13 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
     // this.defaultGroups = LD.cloneDeep(this.groups);
     this.title = this.texts.defaultTitle || '';
 
-    this.objDiffers = new Array<KeyValueDiffer<string, any>>();
+    // this.objDiffers = new Array<KeyValueDiffer<string, any>>();
     console.log('setting differs on groups : ',this.groups.length);
     this.defaultGroups = LD.cloneDeep(this.groups);
 
 
     this.groups.forEach((itemGroup, index) => {
-      this.modifiedStates.push({ name:itemGroup.name, modified:false });
+      this.modifiedStates.push({ name:itemGroup.heading, modified:false });
       // this.objDiffers[index] = this.differs.find([itemGroup]).create();
 
         // this.objDiffers[index] = this.differs.find(itemGroup.options).create();
