@@ -182,7 +182,8 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
          let count = this.groupChanged(this.defaultGroups[index],itemGroup);
          let modifiedState = this.modifiedStates[index];
          modifiedState.modified = (count > 0) ? true : false;
-         console.log(modifiedState);
+         itemGroup.changeCount = count;
+         // console.log(modifiedState);
          // const objDiffer = this.objDiffers[index];
          // const objChanges = objDiffer.diff(itemGroup.options);
          // if (objChanges) {
