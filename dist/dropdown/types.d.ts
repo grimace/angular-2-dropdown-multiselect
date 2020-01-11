@@ -18,6 +18,7 @@ export interface IMultiSelectOptionGroup {
     heading?: string;
     open?: boolean;
     content?: any[];
+    changeCount?: number;
     lastModified?: Date;
 }
 export interface ISelectionModel {

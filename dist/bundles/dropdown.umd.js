@@ -17170,6 +17170,8 @@ var MultiselectDropdown = (function () {
         this.element = element;
         this.differs = differs;
         this.disabled = false;
+        // defaultGroups: Array<IMultiSelectOptionGroup>;
+        this.modifiedStates = [];
         this.selectionLimitReached = new _angular_core.EventEmitter();
         this.dropdownClosed = new _angular_core.EventEmitter();
         this.dropdownOpened = new _angular_core.EventEmitter();
@@ -17252,10 +17254,12 @@ var MultiselectDropdown = (function () {
         this.title = this.texts.defaultTitle || '';
         this.objDiffers = new Array();
         console.log('setting differs on groups : ', this.groups.length);
+        this.defaultGroups = undefined(this.groups);
         this.groups.forEach(function (itemGroup, index) {
+            _this.modifiedStates.push({ name: itemGroup.name, modified: false });
             // this.objDiffers[index] = this.differs.find([itemGroup]).create();
-            _this.objDiffers[index] = _this.differs.find(itemGroup.options).create();
-            console.log('adding differ for group : ', itemGroup.name, ' , differ : ', _this.objDiffers[index]);
+            // this.objDiffers[index] = this.differs.find(itemGroup.options).create();
+            // console.log('adding differ for group : ',itemGroup.name, ' , differ : ', this.objDiffers[index]);
         });
         // this.differ = this.differs.find(this.groups).create(null);
     };
@@ -17263,14 +17267,18 @@ var MultiselectDropdown = (function () {
         var _this = this;
         // const changes = this.differ.diff(this.model);
         this.groups.forEach(function (itemGroup, index) {
-            var objDiffer = _this.objDiffers[index];
-            var objChanges = objDiffer.diff(itemGroup.options);
-            if (objChanges) {
-                console.log('ngDoCheck objChanges : ', objChanges);
-                objChanges.forEachChangedItem(function (changedItem) {
-                    console.log(changedItem.key);
-                });
-            }
+            var count = _this.groupChanged(_this.defaultGroups[index], itemGroup);
+            var modifiedState = _this.modifiedStates[index];
+            modifiedState.modified = (count > 0) ? true : false;
+            console.log(modifiedState);
+            // const objDiffer = this.objDiffers[index];
+            // const objChanges = objDiffer.diff(itemGroup.options);
+            // if (objChanges) {
+            //   console.log('ngDoCheck objChanges : ',objChanges);
+            //   objChanges.forEachChangedItem((changedItem) => {
+            //     console.log(changedItem.key);
+            //   });
+            // }
         });
         // const changes = this.differ.diff(this.groups);
         // if (changes) {
@@ -17766,6 +17774,17 @@ var MultiselectDropdown = (function () {
                 this.updateCollectiveGuard(event, option, item);
                 break;
         }
+    };
+    MultiselectDropdown.prototype.groupChanged = function (references, group) {
+        var diffCount = 0;
+        references.options.forEach(function (reference, index) {
+            var option = group.options[index];
+            if (reference.on != option.on) {
+                diffCount++;
+            }
+        });
+        group.changeCount = diffCount;
+        return diffCount;
     };
     return MultiselectDropdown;
 }());

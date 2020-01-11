@@ -9,6 +9,8 @@ export declare class MultiselectDropdown implements OnInit, OnChanges, DoCheck, 
     settings: IMultiSelectSettings;
     texts: IMultiSelectTexts;
     disabled: boolean;
+    modifiedStates: any[];
+    defaultGroups: Array<IMultiSelectOptionGroup>;
     private objDiffers;
     selectionLimitReached: EventEmitter<{}>;
     dropdownClosed: EventEmitter<{}>;
@@ -68,4 +70,5 @@ export declare class MultiselectDropdown implements OnInit, OnChanges, DoCheck, 
     updateCollectiveGuard(event: any, option: any, item: IMultiSelectOption): void;
     updatePreventGuard(event: any, option: any, item: IMultiSelectOption): void;
     updateGuard(event: any, group: IMultiSelectOptionGroup, option: any, item: IMultiSelectOption): void;
+    groupChanged(references: IMultiSelectOptionGroup, group: IMultiSelectOptionGroup): number;
 }

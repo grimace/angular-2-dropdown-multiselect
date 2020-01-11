@@ -49,6 +49,8 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   @Input() disabled: boolean = false;
 
   // defaultGroups: Array<IMultiSelectOptionGroup>;
+  modifiedStates = [];
+  defaultGroups: Array<IMultiSelectOptionGroup>;
   private objDiffers: Array<KeyValueDiffer<string, any>>;
 
   @Output() selectionLimitReached = new EventEmitter();
@@ -157,11 +159,15 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
 
     this.objDiffers = new Array<KeyValueDiffer<string, any>>();
     console.log('setting differs on groups : ',this.groups.length);
+    this.defaultGroups = LD.cloneDeep(this.groups);
+
+
     this.groups.forEach((itemGroup, index) => {
+      this.modifiedStates.push({ name:itemGroup.name, modified:false });
       // this.objDiffers[index] = this.differs.find([itemGroup]).create();
 
-        this.objDiffers[index] = this.differs.find(itemGroup.options).create();
-        console.log('adding differ for group : ',itemGroup.name, ' , differ : ', this.objDiffers[index]);
+        // this.objDiffers[index] = this.differs.find(itemGroup.options).create();
+        // console.log('adding differ for group : ',itemGroup.name, ' , differ : ', this.objDiffers[index]);
 
     });
 
@@ -173,14 +179,18 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   ngDoCheck() {
     // const changes = this.differ.diff(this.model);
     this.groups.forEach((itemGroup, index) => {
-         const objDiffer = this.objDiffers[index];
-         const objChanges = objDiffer.diff(itemGroup.options);
-         if (objChanges) {
-           console.log('ngDoCheck objChanges : ',objChanges);
-           objChanges.forEachChangedItem((changedItem) => {
-             console.log(changedItem.key);
-           });
-         }
+         let count = this.groupChanged(this.defaultGroups[index],itemGroup);
+         let modifiedState = this.modifiedStates[index];
+         modifiedState.modified = (count > 0) ? true : false;
+         console.log(modifiedState);
+         // const objDiffer = this.objDiffers[index];
+         // const objChanges = objDiffer.diff(itemGroup.options);
+         // if (objChanges) {
+         //   console.log('ngDoCheck objChanges : ',objChanges);
+         //   objChanges.forEachChangedItem((changedItem) => {
+         //     console.log(changedItem.key);
+         //   });
+         // }
    });
 
 
@@ -713,6 +723,17 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
     }
   }
 
+  groupChanged(references:IMultiSelectOptionGroup, group:IMultiSelectOptionGroup) {
+      let diffCount = 0;
+      references.options.forEach((reference,index)=> {
+          let option = group.options[index];
+          if (reference.on != option.on) {
+              diffCount ++;
+          }
+      });
+      group.changeCount = diffCount;
+      return diffCount;
+  }
   // sliderChange( event ) {
   //   console.log(event);
   // }

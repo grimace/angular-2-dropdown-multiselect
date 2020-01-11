@@ -13,6 +13,7 @@ export enum GUARDTYPE {
 }
 
 export interface IMultiSelectOptionGroup {
+
   id?: any;
   name?: any;
   type?: any;
@@ -20,6 +21,7 @@ export interface IMultiSelectOptionGroup {
   heading?: string;
   open?: boolean;
   content?: any [];
+  changeCount?: number;
   lastModified?: Date;
 
 }
