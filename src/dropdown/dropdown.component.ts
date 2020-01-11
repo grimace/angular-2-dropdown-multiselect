@@ -42,7 +42,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
 
   @Input() options: Array<IMultiSelectOption>;
   // @Input() groups: Array<IMultiSelectOptionGroup>;
-  @Input('groups') groups: Array<IMultiSelectOptionGroup>;
+  @Input( 'groups' ) groups: Array<IMultiSelectOptionGroup>;
   @Input() settings: IMultiSelectSettings;
   @Input() texts: IMultiSelectTexts;
   @Input() disabled: boolean = false;
@@ -129,6 +129,10 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   // constructor(private element: ElementRef, private differs: IterableDiffers) {
   constructor(private element: ElementRef, private differs: KeyValueDiffers) {
     console.log('a2 constructor()');
+
+    // this.groups = new Array<ItemGroup>();
+    // this.differ = this.differs.find(this.itemGroups).create();
+
   }
 
   // search(event) {
@@ -152,7 +156,8 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
 
     this.objDiffers = new Array<KeyValueDiffer<string, any>>();
     this.groups.forEach((itemGroup, index) => {
-         this.objDiffers[index] = this.differs.find(itemGroup).create();
+      // this.objDiffers[index] = this.differs.find([itemGroup]).create();
+         this.objDiffers[index] = this.differs.find([]).create();
     });
 
 
@@ -210,6 +215,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
          const objDiffer = this.objDiffers[index];
          const objChanges = objDiffer.diff(itemGroup);
          if (objChanges) {
+           console.log('ngDoCheck objChanges : ',objChanges);
            objChanges.forEachChangedItem((changedItem) => {
              console.log(changedItem.key);
            });

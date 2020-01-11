@@ -17216,6 +17216,8 @@ var MultiselectDropdown = (function () {
         this.onModelChange = function (_) { };
         this.onModelTouched = function () { };
         console.log('a2 constructor()');
+        // this.groups = new Array<ItemGroup>();
+        // this.differ = this.differs.find(this.itemGroups).create();
     }
     MultiselectDropdown.prototype.onClick = function (target) {
         if (!this.isVisible)
@@ -17250,7 +17252,8 @@ var MultiselectDropdown = (function () {
         this.title = this.texts.defaultTitle || '';
         this.objDiffers = new Array();
         this.groups.forEach(function (itemGroup, index) {
-            _this.objDiffers[index] = _this.differs.find(itemGroup).create();
+            // this.objDiffers[index] = this.differs.find([itemGroup]).create();
+            _this.objDiffers[index] = _this.differs.find([]).create();
         });
         // this.differ = this.differs.find(this.groups).create(null);
     };
@@ -17294,6 +17297,7 @@ var MultiselectDropdown = (function () {
             var objDiffer = _this.objDiffers[index];
             var objChanges = objDiffer.diff(itemGroup);
             if (objChanges) {
+                console.log('ngDoCheck objChanges : ', objChanges);
                 objChanges.forEachChangedItem(function (changedItem) {
                     console.log(changedItem.key);
                 });
