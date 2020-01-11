@@ -159,14 +159,39 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
     console.log('setting differs on groups : ',this.groups.length);
     this.groups.forEach((itemGroup, index) => {
       // this.objDiffers[index] = this.differs.find([itemGroup]).create();
-         this.objDiffers[index] = this.differs.find(itemGroup).create();
-         console.log('adding differ for group : ',itemGroup.name, ' , differ : ', this.objDiffers[index]);
+
+        this.objDiffers[index] = this.differs.find(itemGroup.options).create();
+        console.log('adding differ for group : ',itemGroup.name, ' , differ : ', this.objDiffers[index]);
+
     });
 
 
     // this.differ = this.differs.find(this.groups).create(null);
 
   }
+
+  ngDoCheck() {
+    // const changes = this.differ.diff(this.model);
+    this.groups.forEach((itemGroup, index) => {
+         const objDiffer = this.objDiffers[index];
+         const objChanges = objDiffer.diff(itemGroup.options);
+         if (objChanges) {
+           console.log('ngDoCheck objChanges : ',objChanges);
+           objChanges.forEachChangedItem((changedItem) => {
+             console.log(changedItem.key);
+           });
+         }
+   });
+
+
+    // const changes = this.differ.diff(this.groups);
+    // if (changes) {
+    //   console.log('dropdownComponent changed : ',changes);
+    //   this.updateNumSelected();
+    //   this.updateTitle();
+    // }
+  }
+
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['options']) {
@@ -210,28 +235,6 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
 
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
-  }
-
-  ngDoCheck() {
-    // const changes = this.differ.diff(this.model);
-    this.groups.forEach((itemGroup, index) => {
-         const objDiffer = this.objDiffers[index];
-         const objChanges = objDiffer.diff(itemGroup);
-         if (objChanges) {
-           console.log('ngDoCheck objChanges : ',objChanges);
-           objChanges.forEachChangedItem((changedItem) => {
-             console.log(changedItem.key);
-           });
-         }
-   });
-
-
-    // const changes = this.differ.diff(this.groups);
-    // if (changes) {
-    //   console.log('dropdownComponent changed : ',changes);
-    //   this.updateNumSelected();
-    //   this.updateTitle();
-    // }
   }
 
   validate(_c: AbstractControl): { [key: string]: any; } {

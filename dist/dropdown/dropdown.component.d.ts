@@ -30,6 +30,7 @@ export declare class MultiselectDropdown implements OnInit, OnChanges, DoCheck, 
     constructor(element: ElementRef, differs: KeyValueDiffers);
     getItemStyle(option: IMultiSelectOption): any;
     ngOnInit(): void;
+    ngDoCheck(): void;
     ngOnChanges(changes: SimpleChanges): void;
     onModelChange: Function;
     onModelTouched: Function;
@@ -39,7 +40,6 @@ export declare class MultiselectDropdown implements OnInit, OnChanges, DoCheck, 
     registerOnTouched(fn: Function): void;
     isDisabled(option: IMultiSelectOption): boolean;
     setDisabledState(isDisabled: boolean): void;
-    ngDoCheck(): void;
     validate(_c: AbstractControl): {
         [key: string]: any;
     };

@@ -17254,10 +17254,30 @@ var MultiselectDropdown = (function () {
         console.log('setting differs on groups : ', this.groups.length);
         this.groups.forEach(function (itemGroup, index) {
             // this.objDiffers[index] = this.differs.find([itemGroup]).create();
-            _this.objDiffers[index] = _this.differs.find(itemGroup).create();
+            _this.objDiffers[index] = _this.differs.find(itemGroup.options).create();
             console.log('adding differ for group : ', itemGroup.name, ' , differ : ', _this.objDiffers[index]);
         });
         // this.differ = this.differs.find(this.groups).create(null);
+    };
+    MultiselectDropdown.prototype.ngDoCheck = function () {
+        var _this = this;
+        // const changes = this.differ.diff(this.model);
+        this.groups.forEach(function (itemGroup, index) {
+            var objDiffer = _this.objDiffers[index];
+            var objChanges = objDiffer.diff(itemGroup.options);
+            if (objChanges) {
+                console.log('ngDoCheck objChanges : ', objChanges);
+                objChanges.forEachChangedItem(function (changedItem) {
+                    console.log(changedItem.key);
+                });
+            }
+        });
+        // const changes = this.differ.diff(this.groups);
+        // if (changes) {
+        //   console.log('dropdownComponent changed : ',changes);
+        //   this.updateNumSelected();
+        //   this.updateTitle();
+        // }
     };
     MultiselectDropdown.prototype.ngOnChanges = function (changes) {
         if (changes['options']) {
@@ -17291,26 +17311,6 @@ var MultiselectDropdown = (function () {
     };
     MultiselectDropdown.prototype.setDisabledState = function (isDisabled) {
         this.disabled = isDisabled;
-    };
-    MultiselectDropdown.prototype.ngDoCheck = function () {
-        var _this = this;
-        // const changes = this.differ.diff(this.model);
-        this.groups.forEach(function (itemGroup, index) {
-            var objDiffer = _this.objDiffers[index];
-            var objChanges = objDiffer.diff(itemGroup);
-            if (objChanges) {
-                console.log('ngDoCheck objChanges : ', objChanges);
-                objChanges.forEachChangedItem(function (changedItem) {
-                    console.log(changedItem.key);
-                });
-            }
-        });
-        // const changes = this.differ.diff(this.groups);
-        // if (changes) {
-        //   console.log('dropdownComponent changed : ',changes);
-        //   this.updateNumSelected();
-        //   this.updateTitle();
-        // }
     };
     MultiselectDropdown.prototype.validate = function (_c) {
         return (this.model && this.model.length) ? null : {
