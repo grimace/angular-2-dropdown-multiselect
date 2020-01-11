@@ -107,7 +107,7 @@ var MultiselectDropdown = (function () {
         console.log('setting differs on groups : ', this.groups.length);
         this.defaultGroups = LD.cloneDeep(this.groups);
         this.groups.forEach(function (itemGroup, index) {
-            _this.modifiedStates.push({ name: itemGroup.heading, modified: false });
+            _this.modifiedStates.push({ name: itemGroup.name, modified: false });
             // this.objDiffers[index] = this.differs.find([itemGroup]).create();
             // this.objDiffers[index] = this.differs.find(itemGroup.options).create();
             // console.log('adding differ for group : ',itemGroup.name, ' , differ : ', this.objDiffers[index]);

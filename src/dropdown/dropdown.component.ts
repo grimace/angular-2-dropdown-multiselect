@@ -163,7 +163,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
 
 
     this.groups.forEach((itemGroup, index) => {
-      this.modifiedStates.push({ name:itemGroup.heading, modified:false });
+      this.modifiedStates.push({ name:itemGroup.name, modified:false });
       // this.objDiffers[index] = this.differs.find([itemGroup]).create();
 
         // this.objDiffers[index] = this.differs.find(itemGroup.options).create();
