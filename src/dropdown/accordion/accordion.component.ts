@@ -45,7 +45,7 @@ export class Accordion {
         <span class=" mdropdown-item dropdown-header">
           <!-- <img *ngIf="_isOpen" class="twistie" src="assets/icons/twistie_on.png">
           <img *ngIf="!_isOpen" class="twistie" src="assets/icons/twistie_off.png"> -->
-          <img *ngIf="!_isOpen" class="twistie" [src]="toggleImage">
+          <img class="twistie" [src]="toggleImage">
           {{group.heading}}
         </span>
         </a>
