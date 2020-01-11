@@ -17913,7 +17913,7 @@ var AccordionGroup = (function () {
 AccordionGroup.decorators = [
     { type: _angular_core.Component, args: [{
                 selector: 'accordion-group',
-                templateUrl: './accordion.component.html',
+                templateUrl: 'accordion.component.html',
             },] },
 ];
 /** @nocollapse */

@@ -35,7 +35,7 @@ export class Accordion {
 
 @Component({
   selector: 'accordion-group',
-  templateUrl: './accordion.component.html',
+  templateUrl: 'accordion.component.html',
 
   // template:
   // `<div class="panel panel-default" [ngClass]="{'panel-open': isOpen}">

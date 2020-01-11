@@ -93,7 +93,7 @@ export { AccordionGroup };
 AccordionGroup.decorators = [
     { type: Component, args: [{
                 selector: 'accordion-group',
-                templateUrl: './accordion.component.html',
+                templateUrl: 'accordion.component.html',
             },] },
 ];
 /** @nocollapse */
