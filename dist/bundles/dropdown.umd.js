@@ -17289,6 +17289,7 @@ var MultiselectDropdown = (function () {
     };
     MultiselectDropdown.prototype.ngOnChanges = function (changes) {
         if (changes['options']) {
+            console.log('ngOnChanges - changes detected : ', changes);
             this.options = this.options || [];
             this.parents = this.options
                 .filter(function (option) { return typeof option.parentId === 'number'; })

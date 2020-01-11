@@ -205,6 +205,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['options']) {
+      console.log('ngOnChanges - changes detected : ',changes);
       this.options = this.options || [];
       this.parents = this.options
         .filter(option => typeof option.parentId === 'number')
