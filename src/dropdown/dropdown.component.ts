@@ -15,6 +15,7 @@ import {
   HostListener,
   Input,
   IterableDiffers,
+  IterableDiffer,
   KeyValueDiffers,
   KeyValueDiffer,
   OnChanges,
@@ -155,9 +156,11 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
     this.title = this.texts.defaultTitle || '';
 
     this.objDiffers = new Array<KeyValueDiffer<string, any>>();
+    console.log('setting differs on groups : ',this.groups.length);
     this.groups.forEach((itemGroup, index) => {
       // this.objDiffers[index] = this.differs.find([itemGroup]).create();
-         this.objDiffers[index] = this.differs.find([]).create();
+         this.objDiffers[index] = this.differs.find(itemGroup).create();
+         console.log('adding differ for group : ',itemGroup.name, ' , differ : ', this.objDiffers[index]);
     });
 
 
