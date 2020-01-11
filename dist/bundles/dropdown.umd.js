@@ -17907,6 +17907,7 @@ var AccordionGroup = (function () {
                 src = "assets/icons/twistie_off_blue.png";
             }
         }
+        return src;
     };
     return AccordionGroup;
 }());
