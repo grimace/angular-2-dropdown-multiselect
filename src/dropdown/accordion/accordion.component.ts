@@ -45,7 +45,7 @@ export class Accordion {
         <span class=" mdropdown-item dropdown-header">
           <!-- <img *ngIf="_isOpen" class="twistie" src="assets/icons/twistie_on.png">
           <img *ngIf="!_isOpen" class="twistie" src="assets/icons/twistie_off.png"> -->
-          <img *ngIf="!_isOpen" class="twistie" src="getToggleImage()">
+          <img *ngIf="!_isOpen" class="twistie" [src]="toggleImage">
           {{group.heading}}
         </span>
         </a>
@@ -64,6 +64,7 @@ export class AccordionGroup implements OnDestroy {
 
   @Input() group: any;
   // @Input() heading: string;
+  toggleImage = "assets/icons/twistie_on.png";
 
   @Input()
   set isOpen(value: boolean) {
@@ -85,11 +86,16 @@ export class AccordionGroup implements OnDestroy {
     this.accordion.removeGroup(this);
   }
 
+  ngOnInit() {
+    this.toggleImage = this.getToggleImage();
+  }
+
   toggleOpen(event: MouseEvent): void {
     event.preventDefault();
     event.stopPropagation();
     this.isOpen = !this.isOpen;
   }
+
   isModified() {
     let modified = false;
     if (this.group.changeCount && this.group.changeCount > 0) {

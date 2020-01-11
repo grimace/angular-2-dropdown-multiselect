@@ -17858,13 +17858,14 @@ var AccordionGroup = (function () {
     function AccordionGroup(accordion) {
         this.accordion = accordion;
         this._isOpen = false;
+        // @Input() heading: string;
+        this.toggleImage = "assets/icons/twistie_on.png";
         this.accordion.addGroup(this);
     }
     Object.defineProperty(AccordionGroup.prototype, "isOpen", {
         get: function () {
             return this._isOpen;
         },
-        // @Input() heading: string;
         set: function (value) {
             this._isOpen = value;
             if (value) {
@@ -17876,6 +17877,9 @@ var AccordionGroup = (function () {
     });
     AccordionGroup.prototype.ngOnDestroy = function () {
         this.accordion.removeGroup(this);
+    };
+    AccordionGroup.prototype.ngOnInit = function () {
+        this.toggleImage = this.getToggleImage();
     };
     AccordionGroup.prototype.toggleOpen = function (event) {
         event.preventDefault();
@@ -17916,7 +17920,7 @@ AccordionGroup.decorators = [
     { type: _angular_core.Component, args: [{
                 selector: 'accordion-group',
                 // templateUrl: 'accordion.component.html',
-                template: "<div class=\"panel panel-default\" [ngClass]=\"{'panel-open': isOpen}\">\n    <div class=\"panel-heading\" (click)=\"toggleOpen($event)\">\n      <h4 class=\"panel-title\">\n        <a href tabindex=\"0\">\n        <span class=\" mdropdown-item dropdown-header\">\n          <!-- <img *ngIf=\"_isOpen\" class=\"twistie\" src=\"assets/icons/twistie_on.png\">\n          <img *ngIf=\"!_isOpen\" class=\"twistie\" src=\"assets/icons/twistie_off.png\"> -->\n          <img *ngIf=\"!_isOpen\" class=\"twistie\" src=\"getToggleImage()\">\n          {{group.heading}}\n        </span>\n        </a>\n      </h4>\n    </div>\n    <div class=\"panel-collapse\" [hidden]=\"!isOpen\">\n      <div class=\"panel-body\">\n          <ng-content></ng-content>\n      </div>\n    </div>\n  </div>"
+                template: "<div class=\"panel panel-default\" [ngClass]=\"{'panel-open': isOpen}\">\n    <div class=\"panel-heading\" (click)=\"toggleOpen($event)\">\n      <h4 class=\"panel-title\">\n        <a href tabindex=\"0\">\n        <span class=\" mdropdown-item dropdown-header\">\n          <!-- <img *ngIf=\"_isOpen\" class=\"twistie\" src=\"assets/icons/twistie_on.png\">\n          <img *ngIf=\"!_isOpen\" class=\"twistie\" src=\"assets/icons/twistie_off.png\"> -->\n          <img *ngIf=\"!_isOpen\" class=\"twistie\" [src]=\"toggleImage\">\n          {{group.heading}}\n        </span>\n        </a>\n      </h4>\n    </div>\n    <div class=\"panel-collapse\" [hidden]=\"!isOpen\">\n      <div class=\"panel-body\">\n          <ng-content></ng-content>\n      </div>\n    </div>\n  </div>"
             },] },
 ];
 /** @nocollapse */
