@@ -113,6 +113,7 @@ export class AccordionGroup implements OnDestroy {
         src = "assets/icons/twistie_off_blue.png";
       }
     }
+    console.log('getToggleImage returning : ',src);
     return src;
   }
 }
