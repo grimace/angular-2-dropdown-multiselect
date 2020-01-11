@@ -17913,7 +17913,8 @@ var AccordionGroup = (function () {
 AccordionGroup.decorators = [
     { type: _angular_core.Component, args: [{
                 selector: 'accordion-group',
-                templateUrl: 'accordion.component.html',
+                // templateUrl: 'accordion.component.html',
+                template: "<div class=\"panel panel-default\" [ngClass]=\"{'panel-open': isOpen}\">\n    <div class=\"panel-heading\" (click)=\"toggleOpen($event)\">\n      <h4 class=\"panel-title\">\n        <a href tabindex=\"0\">\n        <span class=\" mdropdown-item dropdown-header\">\n          <!-- <img *ngIf=\"_isOpen\" class=\"twistie\" src=\"assets/icons/twistie_on.png\">\n          <img *ngIf=\"!_isOpen\" class=\"twistie\" src=\"assets/icons/twistie_off.png\"> -->\n          <img *ngIf=\"!_isOpen\" class=\"twistie\" src=\"getToggleImage()\">\n          {{group.heading}}\n        </span>\n        </a>\n      </h4>\n    </div>\n    <div class=\"panel-collapse\" [hidden]=\"!isOpen\">\n      <div class=\"panel-body\">\n          <ng-content></ng-content>\n      </div>\n    </div>\n  </div>"
             },] },
 ];
 /** @nocollapse */
