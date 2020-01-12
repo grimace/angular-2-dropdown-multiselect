@@ -74,7 +74,7 @@ var AccordionGroup = (function () {
         if (this.group.changeCount && this.group.changeCount > 0) {
             modified = true;
         }
-        return false;
+        return modified;
     };
     AccordionGroup.prototype.getToggleImage = function () {
         var src;

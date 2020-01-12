@@ -110,7 +110,7 @@ export class AccordionGroup implements OnDestroy {
     if (this.group.changeCount && this.group.changeCount > 0 ) {
       modified = true;
     }
-    return false;
+    return modified;
   }
 
   getToggleImage() {
