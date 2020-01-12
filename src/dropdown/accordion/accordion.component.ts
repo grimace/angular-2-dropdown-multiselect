@@ -43,8 +43,10 @@ export class Accordion {
       <h4 class="panel-title">
         <a href tabindex="0">
         <span class=" mdropdown-item dropdown-header">
-          <!-- <img *ngIf="_isOpen" class="twistie" src="assets/icons/twistie_on.png">
-          <img *ngIf="!_isOpen" class="twistie" src="assets/icons/twistie_off.png"> -->
+          <!--
+            <img *ngIf="_isOpen" class="twistie" src="assets/icons/twistie_on.png">
+            <img *ngIf="!_isOpen" class="twistie" src="assets/icons/twistie_off.png">
+          -->
           <img class="twistie" [src]="toggleImage">
           {{group.heading}}
         </span>
@@ -104,7 +106,7 @@ export class AccordionGroup implements OnDestroy {
 
   isModified() {
     let modified = false;
-    if (this.group.modified) {
+    if (this.group.changeCount && this.group.changeCount > 0 ) {
       modified = true;
     }
     return false;
