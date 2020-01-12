@@ -9,7 +9,7 @@ export declare class AccordionGroup implements OnDestroy {
     private accordion;
     _isOpen: boolean;
     group: any;
-    toggleImage: string;
+    toggleImage: any;
     isOpen: boolean;
     constructor(accordion: Accordion);
     ngOnDestroy(): void;

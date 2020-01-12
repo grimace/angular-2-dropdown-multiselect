@@ -37,8 +37,6 @@ var AccordionGroup = (function () {
     function AccordionGroup(accordion) {
         this.accordion = accordion;
         this._isOpen = false;
-        // @Input() heading: string;
-        this.toggleImage = "assets/icons/twistie_on.png";
         this.accordion.addGroup(this);
     }
     Object.defineProperty(AccordionGroup.prototype, "isOpen", {
@@ -64,10 +62,11 @@ var AccordionGroup = (function () {
         event.preventDefault();
         event.stopPropagation();
         this.isOpen = !this.isOpen;
+        this.toggleImage = this.getToggleImage();
     };
     AccordionGroup.prototype.isModified = function () {
         var modified = false;
-        if (this.group.changeCount && this.group.changeCount > 0) {
+        if (this.group.modified) {
             modified = true;
         }
         return false;

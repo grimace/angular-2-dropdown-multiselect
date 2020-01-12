@@ -64,7 +64,7 @@ export class AccordionGroup implements OnDestroy {
 
   @Input() group: any;
   // @Input() heading: string;
-  toggleImage = "assets/icons/twistie_on.png";
+  toggleImage;
 
   @Input()
   set isOpen(value: boolean) {
@@ -94,11 +94,12 @@ export class AccordionGroup implements OnDestroy {
     event.preventDefault();
     event.stopPropagation();
     this.isOpen = !this.isOpen;
+    this.toggleImage = this.getToggleImage();
   }
 
   isModified() {
     let modified = false;
-    if (this.group.changeCount && this.group.changeCount > 0) {
+    if (this.group.modified) {
       modified = true;
     }
     return false;
