@@ -17339,8 +17339,8 @@ var MultiselectDropdown = (function () {
     };
     MultiselectDropdown.prototype.toggleDropdown = function () {
         this.isVisible = !this.isVisible;
-        console.log('dropdownComponent - toggleDropdown() visible : ', this.isVisible);
         this.isVisible ? this.dropdownOpened.emit() : this.dropdownClosed.emit();
+        console.log('dropdownComponent - toggleDropdown() filterCount : ', this.getFilterCount());
         // console.log('toggleDropdown - visible : '+this.isVisible);
     };
     MultiselectDropdown.prototype.isSelectedSave = function (option) {
