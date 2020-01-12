@@ -48,6 +48,7 @@ var AccordionGroup = (function () {
             if (value) {
                 this.accordion.closeOthers(this);
             }
+            this.toggleImage = this.getToggleImage();
         },
         enumerable: true,
         configurable: true
@@ -64,6 +65,9 @@ var AccordionGroup = (function () {
         this.isOpen = !this.isOpen;
         this.toggleImage = this.getToggleImage();
     };
+    // ngDoCheck() {
+    //
+    // }
     AccordionGroup.prototype.isModified = function () {
         var modified = false;
         if (this.group.modified) {

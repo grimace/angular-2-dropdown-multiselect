@@ -71,4 +71,5 @@ export declare class MultiselectDropdown implements OnInit, OnChanges, DoCheck, 
     updatePreventGuard(event: any, option: any, item: IMultiSelectOption): void;
     updateGuard(event: any, group: IMultiSelectOptionGroup, option: any, item: IMultiSelectOption): void;
     groupChanged(references: IMultiSelectOptionGroup, group: IMultiSelectOptionGroup): number;
+    getFilterCount(): number;
 }

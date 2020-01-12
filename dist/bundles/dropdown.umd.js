@@ -17788,11 +17788,21 @@ var MultiselectDropdown = (function () {
         group.changeCount = diffCount;
         return diffCount;
     };
+    // sliderChange( event ) {
+    //   console.log(event);
+    // }
+    MultiselectDropdown.prototype.getFilterCount = function () {
+        var filterCount = 0;
+        for (var _i = 0, _a = this.groups; _i < _a.length; _i++) {
+            var group = _a[_i];
+            if (group.changeCount) {
+                filterCount += group.changeCount;
+            }
+        }
+        return filterCount;
+    };
     return MultiselectDropdown;
 }());
-// sliderChange( event ) {
-//   console.log(event);
-// }
 MultiselectDropdown.decorators = [
     { type: _angular_core.Component, args: [{
                 selector: 'ss-multiselect-dropdown',
@@ -17869,6 +17879,7 @@ var AccordionGroup = (function () {
             if (value) {
                 this.accordion.closeOthers(this);
             }
+            this.toggleImage = this.getToggleImage();
         },
         enumerable: true,
         configurable: true
@@ -17885,6 +17896,9 @@ var AccordionGroup = (function () {
         this.isOpen = !this.isOpen;
         this.toggleImage = this.getToggleImage();
     };
+    // ngDoCheck() {
+    //
+    // }
     AccordionGroup.prototype.isModified = function () {
         var modified = false;
         if (this.group.modified) {

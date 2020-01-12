@@ -72,6 +72,7 @@ export class AccordionGroup implements OnDestroy {
     if (value) {
       this.accordion.closeOthers(this);
     }
+    this.toggleImage = this.getToggleImage();
   }
 
   get isOpen() {
@@ -96,6 +97,10 @@ export class AccordionGroup implements OnDestroy {
     this.isOpen = !this.isOpen;
     this.toggleImage = this.getToggleImage();
   }
+
+  // ngDoCheck() {
+  //
+  // }
 
   isModified() {
     let modified = false;

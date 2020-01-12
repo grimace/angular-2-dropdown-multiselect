@@ -740,4 +740,13 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   //   console.log(event);
   // }
 
+  public getFilterCount() {
+      let filterCount = 0;
+      for (let group of this.groups) {
+          if (group.changeCount) {
+            filterCount += group.changeCount;
+          }
+      }
+      return filterCount;
+  }
 }
