@@ -17271,18 +17271,24 @@ var MultiselectDropdown = (function () {
         this.groups.forEach(function (itemGroup, index) {
             var count = _this.groupChanged(_this.defaultGroups[index], itemGroup);
             var modifiedState = _this.modifiedStates[index];
-            modifiedState.modified = (count > 0) ? true : false;
-            itemGroup.changeCount = count;
-            // console.log(modifiedState);
-            // const objDiffer = this.objDiffers[index];
-            // const objChanges = objDiffer.diff(itemGroup.options);
-            // if (objChanges) {
-            //   console.log('ngDoCheck objChanges : ',objChanges);
-            //   objChanges.forEachChangedItem((changedItem) => {
-            //     console.log(changedItem.key);
-            //   });
-            // }
-            totalCount += count;
+            if (count > 0) {
+                modifiedState.modified = (count > 0) ? true : false;
+                itemGroup.changeCount = count;
+                console.log("setting modifiedState : ", modifiedState);
+                // const objDiffer = this.objDiffers[index];
+                // const objChanges = objDiffer.diff(itemGroup.options);
+                // if (objChanges) {
+                //   console.log('ngDoCheck objChanges : ',objChanges);
+                //   objChanges.forEachChangedItem((changedItem) => {
+                //     console.log(changedItem.key);
+                //   });
+                // }
+                totalCount += count;
+            }
+            else {
+                modifiedState.modified = false;
+                itemGroup.changeCount = count;
+            }
         });
         // gregm, maybe button title should be controlled by the parent
         if (totalCount) {
@@ -17794,6 +17800,16 @@ var MultiselectDropdown = (function () {
             var option = group.options[index];
             if (reference.on != option.on) {
                 diffCount++;
+            }
+            if (reference.group) {
+                // check any subgroups
+                var subGroup = reference.group;
+                subGroup.forEach(function (subReference, subIndex) {
+                    var subOption = option.group[subIndex];
+                    if (subReference.on != subOption.on) {
+                        diffCount++;
+                    }
+                });
             }
         });
         group.changeCount = diffCount;

@@ -182,18 +182,23 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
     this.groups.forEach((itemGroup, index) => {
          let count = this.groupChanged(this.defaultGroups[index],itemGroup);
          let modifiedState = this.modifiedStates[index];
-         modifiedState.modified = (count > 0) ? true : false;
-         itemGroup.changeCount = count;
-         // console.log(modifiedState);
-         // const objDiffer = this.objDiffers[index];
-         // const objChanges = objDiffer.diff(itemGroup.options);
-         // if (objChanges) {
-         //   console.log('ngDoCheck objChanges : ',objChanges);
-         //   objChanges.forEachChangedItem((changedItem) => {
-         //     console.log(changedItem.key);
-         //   });
-         // }
-         totalCount += count;
+         if (count > 0) {
+           modifiedState.modified = (count > 0) ? true : false;
+           itemGroup.changeCount = count;
+           console.log("setting modifiedState : ",modifiedState);
+           // const objDiffer = this.objDiffers[index];
+           // const objChanges = objDiffer.diff(itemGroup.options);
+           // if (objChanges) {
+           //   console.log('ngDoCheck objChanges : ',objChanges);
+           //   objChanges.forEachChangedItem((changedItem) => {
+           //     console.log(changedItem.key);
+           //   });
+           // }
+           totalCount += count;
+        } else {
+          modifiedState.modified = false;
+          itemGroup.changeCount = count;
+        }
    });
 
    // gregm, maybe button title should be controlled by the parent
@@ -739,10 +744,20 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   groupChanged(references:IMultiSelectOptionGroup, group:IMultiSelectOptionGroup) {
       let diffCount = 0;
       references.options.forEach((reference,index)=> {
-          let option = group.options[index];
-          if (reference.on != option.on) {
+        let option = group.options[index];
+        if (reference.on != option.on) {
+            diffCount ++;
+        }
+        if (reference.group) {
+          // check any subgroups
+          let subGroup = reference.group;
+          subGroup.forEach((subReference,subIndex)=> {
+            let subOption = option.group[subIndex];
+            if (subReference.on != subOption.on) {
               diffCount ++;
-          }
+            }
+          });
+        }
       });
       group.changeCount = diffCount;
       return diffCount;
