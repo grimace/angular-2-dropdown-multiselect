@@ -116,7 +116,7 @@ export class AccordionGroup implements OnDestroy {
 
   getToggleImage() {
     let src;
-    if (this.isModified()) {
+    if (!this.isModified()) {
       if (this.isOpen) {
         src = "assets/icons/twistie_on.png";
       } else {

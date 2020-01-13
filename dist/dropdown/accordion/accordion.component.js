@@ -79,7 +79,7 @@ var AccordionGroup = (function () {
     };
     AccordionGroup.prototype.getToggleImage = function () {
         var src;
-        if (this.isModified()) {
+        if (!this.isModified()) {
             if (this.isOpen) {
                 src = "assets/icons/twistie_on.png";
             }
