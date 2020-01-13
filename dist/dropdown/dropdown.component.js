@@ -97,10 +97,10 @@ var MultiselectDropdown = (function () {
     };
     MultiselectDropdown.prototype.ngOnInit = function () {
         var _this = this;
-        // this.settings = Object.assign(this.defaultSettings, this.settings);
-        this.settings = LD.cloneDeep(this.defaultSettings);
-        // this.texts = Object.assign(this.defaultTexts, this.texts);
-        this.texts = LD.cloneDeep(this.defaultTexts);
+        this.settings = Object.assign(this.defaultSettings, this.settings);
+        // this.settings = LD.cloneDeep(this.defaultSettings);
+        this.texts = Object.assign(this.defaultTexts, this.texts);
+        // this.texts = LD.cloneDeep(this.defaultTexts);
         // this.defaultGroups = LD.cloneDeep(this.groups);
         // this.title = this.texts.defaultTitle || '';
         // this.objDiffers = new Array<KeyValueDiffer<string, any>>();

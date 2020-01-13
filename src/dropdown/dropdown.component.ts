@@ -150,10 +150,10 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
 
   ngOnInit() {
 
-    // this.settings = Object.assign(this.defaultSettings, this.settings);
-    this.settings = LD.cloneDeep(this.defaultSettings);
-    // this.texts = Object.assign(this.defaultTexts, this.texts);
-    this.texts = LD.cloneDeep(this.defaultTexts);
+    this.settings = Object.assign(this.defaultSettings, this.settings);
+    // this.settings = LD.cloneDeep(this.defaultSettings);
+    this.texts = Object.assign(this.defaultTexts, this.texts);
+    // this.texts = LD.cloneDeep(this.defaultTexts);
     // this.defaultGroups = LD.cloneDeep(this.groups);
     // this.title = this.texts.defaultTitle || '';
 
@@ -381,7 +381,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   public setTitle(t) {
     this.title = t;
   }
-  
+
   searchFilterApplied() {
     return this.settings.enableSearch && this.searchFilterText && this.searchFilterText.length > 0;
   }
