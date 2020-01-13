@@ -71,7 +71,7 @@ var AccordionGroup = (function () {
     AccordionGroup.prototype.isModified = function () {
         var modified = false;
         console.log('checking isModified : ', this.group.changeCount);
-        if (this.group.changeCount && this.group.changeCount > 0) {
+        if (this.group.changeCount > 0) {
             modified = true;
         }
         return modified;
