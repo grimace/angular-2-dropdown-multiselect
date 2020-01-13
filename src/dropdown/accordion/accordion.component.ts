@@ -108,6 +108,7 @@ export class AccordionGroup implements OnDestroy {
     let modified = false;
     console.log('checking isModified : ',this.group.changeCount);
     if (this.group.changeCount > 0 ) {
+      console.log('setting isModified to true.');
       modified = true;
     }
     return modified;
