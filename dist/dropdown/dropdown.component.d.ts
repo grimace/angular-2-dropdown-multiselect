@@ -54,6 +54,7 @@ export declare class MultiselectDropdown implements OnInit, OnChanges, DoCheck, 
     toggleSelected(_event: Event, group: IMultiSelectOptionGroup, option: IMultiSelectOption): void;
     updateNumSelected(): void;
     updateTitle(): void;
+    setTitle(t: any): void;
     searchFilterApplied(): boolean;
     checkAll(): void;
     uncheckAll(): void;

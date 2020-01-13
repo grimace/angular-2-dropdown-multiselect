@@ -17451,6 +17451,9 @@ var MultiselectDropdown = (function () {
                 + (this.numSelected === 1 ? this.texts.checked : this.texts.checkedPlural);
         }
     };
+    MultiselectDropdown.prototype.setTitle = function (t) {
+        this.title = t;
+    };
     MultiselectDropdown.prototype.searchFilterApplied = function () {
         return this.settings.enableSearch && this.searchFilterText && this.searchFilterText.length > 0;
     };

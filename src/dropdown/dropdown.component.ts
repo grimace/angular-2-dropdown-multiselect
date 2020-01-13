@@ -378,6 +378,10 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
     }
   }
 
+  public setTitle(t) {
+    this.title = t;
+  }
+  
   searchFilterApplied() {
     return this.settings.enableSearch && this.searchFilterText && this.searchFilterText.length > 0;
   }
