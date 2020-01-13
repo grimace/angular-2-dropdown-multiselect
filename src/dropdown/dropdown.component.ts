@@ -47,7 +47,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   @Input() settings: IMultiSelectSettings;
   @Input() texts: IMultiSelectTexts;
   @Input() disabled: boolean = false;
-
+  @Input() title:string;
   // defaultGroups: Array<IMultiSelectOptionGroup>;
   modifiedStates = [];
   defaultGroups: Array<IMultiSelectOptionGroup>;
@@ -86,7 +86,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   model: any[];
   radioValue: any;
   parents: any[];
-  title: string;
+  // title: string;
   differ: any;
   numSelected: number = 0;
   isVisible: boolean = false;
@@ -155,7 +155,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
     // this.texts = Object.assign(this.defaultTexts, this.texts);
     this.texts = LD.cloneDeep(this.defaultTexts);
     // this.defaultGroups = LD.cloneDeep(this.groups);
-    this.title = this.texts.defaultTitle || '';
+    // this.title = this.texts.defaultTitle || '';
 
     // this.objDiffers = new Array<KeyValueDiffer<string, any>>();
     console.log('setting differs on groups : ',this.groups.length);
@@ -178,6 +178,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
 
   ngDoCheck() {
     // const changes = this.differ.diff(this.model);
+    let totalCount = 0;
     this.groups.forEach((itemGroup, index) => {
          let count = this.groupChanged(this.defaultGroups[index],itemGroup);
          let modifiedState = this.modifiedStates[index];
@@ -192,8 +193,14 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
          //     console.log(changedItem.key);
          //   });
          // }
+         totalCount += count;
    });
 
+   // gregm, maybe button title should be controlled by the parent
+   // if (totalCount) {
+   //     this.numSelected = totalCount;
+   //     this.updateTitle();
+   // }
 
     // const changes = this.differ.diff(this.groups);
     // if (changes) {

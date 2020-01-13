@@ -102,7 +102,7 @@ var MultiselectDropdown = (function () {
         // this.texts = Object.assign(this.defaultTexts, this.texts);
         this.texts = LD.cloneDeep(this.defaultTexts);
         // this.defaultGroups = LD.cloneDeep(this.groups);
-        this.title = this.texts.defaultTitle || '';
+        // this.title = this.texts.defaultTitle || '';
         // this.objDiffers = new Array<KeyValueDiffer<string, any>>();
         console.log('setting differs on groups : ', this.groups.length);
         this.defaultGroups = LD.cloneDeep(this.groups);
@@ -117,6 +117,7 @@ var MultiselectDropdown = (function () {
     MultiselectDropdown.prototype.ngDoCheck = function () {
         var _this = this;
         // const changes = this.differ.diff(this.model);
+        var totalCount = 0;
         this.groups.forEach(function (itemGroup, index) {
             var count = _this.groupChanged(_this.defaultGroups[index], itemGroup);
             var modifiedState = _this.modifiedStates[index];
@@ -131,7 +132,13 @@ var MultiselectDropdown = (function () {
             //     console.log(changedItem.key);
             //   });
             // }
+            totalCount += count;
         });
+        // gregm, maybe button title should be controlled by the parent
+        // if (totalCount) {
+        //     this.numSelected = totalCount;
+        //     this.updateTitle();
+        // }
         // const changes = this.differ.diff(this.groups);
         // if (changes) {
         //   console.log('dropdownComponent changed : ',changes);
@@ -674,6 +681,7 @@ MultiselectDropdown.propDecorators = {
     'settings': [{ type: Input },],
     'texts': [{ type: Input },],
     'disabled': [{ type: Input },],
+    'title': [{ type: Input },],
     'selectionLimitReached': [{ type: Output },],
     'dropdownClosed': [{ type: Output },],
     'dropdownOpened': [{ type: Output },],
