@@ -47,7 +47,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   @Input() settings: IMultiSelectSettings;
   @Input() texts: IMultiSelectTexts;
   @Input() disabled: boolean = false;
-  @Input() title:string;
+  // @Input() title:string;
   // defaultGroups: Array<IMultiSelectOptionGroup>;
   modifiedStates = [];
   defaultGroups: Array<IMultiSelectOptionGroup>;
@@ -86,7 +86,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   model: any[];
   radioValue: any;
   parents: any[];
-  // title: string;
+  title: string;
   differ: any;
   numSelected: number = 0;
   isVisible: boolean = false;
@@ -155,7 +155,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
     this.texts = Object.assign(this.defaultTexts, this.texts);
     // this.texts = LD.cloneDeep(this.defaultTexts);
     // this.defaultGroups = LD.cloneDeep(this.groups);
-    // this.title = this.texts.defaultTitle || '';
+    this.title = this.texts.defaultTitle || '';
 
     // this.objDiffers = new Array<KeyValueDiffer<string, any>>();
     console.log('setting differs on groups : ',this.groups.length);
@@ -197,10 +197,10 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
    });
 
    // gregm, maybe button title should be controlled by the parent
-   // if (totalCount) {
-   //     this.numSelected = totalCount;
-   //     this.updateTitle();
-   // }
+   if (totalCount) {
+       this.numSelected = totalCount;
+       this.updateTitle();
+   }
 
     // const changes = this.differ.diff(this.groups);
     // if (changes) {

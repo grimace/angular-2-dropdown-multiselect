@@ -21,6 +21,7 @@ var MultiselectDropdown = (function () {
         this.element = element;
         this.differs = differs;
         this.disabled = false;
+        // @Input() title:string;
         // defaultGroups: Array<IMultiSelectOptionGroup>;
         this.modifiedStates = [];
         this.selectionLimitReached = new EventEmitter();
@@ -102,7 +103,7 @@ var MultiselectDropdown = (function () {
         this.texts = Object.assign(this.defaultTexts, this.texts);
         // this.texts = LD.cloneDeep(this.defaultTexts);
         // this.defaultGroups = LD.cloneDeep(this.groups);
-        // this.title = this.texts.defaultTitle || '';
+        this.title = this.texts.defaultTitle || '';
         // this.objDiffers = new Array<KeyValueDiffer<string, any>>();
         console.log('setting differs on groups : ', this.groups.length);
         this.defaultGroups = LD.cloneDeep(this.groups);
@@ -135,10 +136,10 @@ var MultiselectDropdown = (function () {
             totalCount += count;
         });
         // gregm, maybe button title should be controlled by the parent
-        // if (totalCount) {
-        //     this.numSelected = totalCount;
-        //     this.updateTitle();
-        // }
+        if (totalCount) {
+            this.numSelected = totalCount;
+            this.updateTitle();
+        }
         // const changes = this.differ.diff(this.groups);
         // if (changes) {
         //   console.log('dropdownComponent changed : ',changes);
@@ -684,7 +685,6 @@ MultiselectDropdown.propDecorators = {
     'settings': [{ type: Input },],
     'texts': [{ type: Input },],
     'disabled': [{ type: Input },],
-    'title': [{ type: Input },],
     'selectionLimitReached': [{ type: Output },],
     'dropdownClosed': [{ type: Output },],
     'dropdownOpened': [{ type: Output },],

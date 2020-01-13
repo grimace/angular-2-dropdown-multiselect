@@ -9,7 +9,6 @@ export declare class MultiselectDropdown implements OnInit, OnChanges, DoCheck, 
     settings: IMultiSelectSettings;
     texts: IMultiSelectTexts;
     disabled: boolean;
-    title: string;
     modifiedStates: any[];
     defaultGroups: Array<IMultiSelectOptionGroup>;
     private objDiffers;
@@ -23,6 +22,7 @@ export declare class MultiselectDropdown implements OnInit, OnChanges, DoCheck, 
     model: any[];
     radioValue: any;
     parents: any[];
+    title: string;
     differ: any;
     numSelected: number;
     isVisible: boolean;
