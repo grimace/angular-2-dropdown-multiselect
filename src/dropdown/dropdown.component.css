@@ -33,6 +33,7 @@ a {
 }
 
 .dropdown-toggle {
+  display: inline-flex;
   align-items: flex-start;
   text-align: center;
   justify-content: center;
