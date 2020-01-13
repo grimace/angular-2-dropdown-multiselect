@@ -367,15 +367,15 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   updateTitle() {
     if (this.numSelected === 0 || this.settings.fixedTitle) {
       this.title = this.texts.defaultTitle || '';
-    } else if (this.settings.displayAllSelectedText && this.model.length === this.options.length) {
-      this.title = this.texts.allSelected || '';
-    } else if (this.settings.dynamicTitleMaxItems && this.settings.dynamicTitleMaxItems >= this.numSelected) {
-      this.title = this.options
-        .filter((option: IMultiSelectOption) =>
-          this.model && this.model.indexOf(option.id) > -1
-        )
-        .map((option: IMultiSelectOption) => option.name)
-        .join(', ');
+    // } else if (this.settings.displayAllSelectedText && this.model.length === this.options.length) {
+    //   this.title = this.texts.allSelected || '';
+    // } else if (this.settings.dynamicTitleMaxItems && this.settings.dynamicTitleMaxItems >= this.numSelected) {
+    //   this.title = this.options
+    //     .filter((option: IMultiSelectOption) =>
+    //       this.model && this.model.indexOf(option.id) > -1
+    //     )
+    //     .map((option: IMultiSelectOption) => option.name)
+    //     .join(', ');
     } else {
       this.title = this.numSelected
         + ' '

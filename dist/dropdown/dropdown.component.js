@@ -288,20 +288,17 @@ var MultiselectDropdown = (function () {
         this.numSelected = this.model && this.model.filter(function (id) { return _this.parents.indexOf(id) < 0; }).length || 0;
     };
     MultiselectDropdown.prototype.updateTitle = function () {
-        var _this = this;
         if (this.numSelected === 0 || this.settings.fixedTitle) {
             this.title = this.texts.defaultTitle || '';
-        }
-        else if (this.settings.displayAllSelectedText && this.model.length === this.options.length) {
-            this.title = this.texts.allSelected || '';
-        }
-        else if (this.settings.dynamicTitleMaxItems && this.settings.dynamicTitleMaxItems >= this.numSelected) {
-            this.title = this.options
-                .filter(function (option) {
-                return _this.model && _this.model.indexOf(option.id) > -1;
-            })
-                .map(function (option) { return option.name; })
-                .join(', ');
+            // } else if (this.settings.displayAllSelectedText && this.model.length === this.options.length) {
+            //   this.title = this.texts.allSelected || '';
+            // } else if (this.settings.dynamicTitleMaxItems && this.settings.dynamicTitleMaxItems >= this.numSelected) {
+            //   this.title = this.options
+            //     .filter((option: IMultiSelectOption) =>
+            //       this.model && this.model.indexOf(option.id) > -1
+            //     )
+            //     .map((option: IMultiSelectOption) => option.name)
+            //     .join(', ');
         }
         else {
             this.title = this.numSelected
