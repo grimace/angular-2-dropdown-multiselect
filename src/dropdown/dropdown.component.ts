@@ -202,10 +202,10 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
    });
 
    // gregm, maybe button title should be controlled by the parent
-   if (totalCount) {
-       this.numSelected = totalCount;
-       this.updateTitle();
-   }
+   // if (totalCount) {
+   this.numSelected = totalCount;
+   this.updateTitle();
+   // }
 
     // const changes = this.differ.diff(this.groups);
     // if (changes) {
@@ -425,6 +425,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   reset() {
     console.log('a2 emitting resetAll');
     this.resetAll.emit();
+
   }
 
   preventCheckboxCheck(event: Event, option: IMultiSelectOption) {

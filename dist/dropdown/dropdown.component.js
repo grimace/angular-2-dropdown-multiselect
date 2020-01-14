@@ -142,10 +142,10 @@ var MultiselectDropdown = (function () {
             }
         });
         // gregm, maybe button title should be controlled by the parent
-        if (totalCount) {
-            this.numSelected = totalCount;
-            this.updateTitle();
-        }
+        // if (totalCount) {
+        this.numSelected = totalCount;
+        this.updateTitle();
+        // }
         // const changes = this.differ.diff(this.groups);
         // if (changes) {
         //   console.log('dropdownComponent changed : ',changes);
