@@ -1,9 +1,10 @@
-import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts, IMultiSelectOptionGroup } from './types';
+import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts, IMultiSelectOptionGroup, IMultiSelectFilterControl } from './types';
 import { DoCheck, ElementRef, EventEmitter, KeyValueDiffers, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, Validator } from '@angular/forms';
 export declare class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlValueAccessor, Validator {
     private element;
     private differs;
+    filterControl: IMultiSelectFilterControl;
     options: Array<IMultiSelectOption>;
     groups: Array<IMultiSelectOptionGroup>;
     settings: IMultiSelectSettings;

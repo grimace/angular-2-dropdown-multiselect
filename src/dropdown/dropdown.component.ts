@@ -5,7 +5,7 @@
  * https://github.com/softsimon/angular-2-dropdown-multiselect
  */
 import { MultiSelectSearchFilter } from './search-filter.pipe';
-import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts, IMultiSelectOptionGroup, GUARDTYPE } from './types';
+import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts, IMultiSelectOptionGroup, IMultiSelectFilterControl, GUARDTYPE } from './types';
 import {
   Component,
   DoCheck,
@@ -40,6 +40,8 @@ const MULTISELECT_VALUE_ACCESSOR: any = {
   providers: [MULTISELECT_VALUE_ACCESSOR]
 })
 export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlValueAccessor, Validator {
+
+  @Input( 'filterControl' ) filterControl:IMultiSelectFilterControl;
 
   @Input() options: Array<IMultiSelectOption>;
   // @Input() groups: Array<IMultiSelectOptionGroup>;

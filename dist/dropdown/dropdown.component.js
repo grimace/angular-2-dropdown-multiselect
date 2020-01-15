@@ -693,6 +693,7 @@ MultiselectDropdown.ctorParameters = function () { return [
     { type: KeyValueDiffers, },
 ]; };
 MultiselectDropdown.propDecorators = {
+    'filterControl': [{ type: Input, args: ['filterControl',] },],
     'options': [{ type: Input },],
     'groups': [{ type: Input, args: ['groups',] },],
     'settings': [{ type: Input },],

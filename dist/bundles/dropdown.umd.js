@@ -17841,6 +17841,7 @@ MultiselectDropdown.ctorParameters = function () { return [
     { type: _angular_core.KeyValueDiffers, },
 ]; };
 MultiselectDropdown.propDecorators = {
+    'filterControl': [{ type: _angular_core.Input, args: ['filterControl',] },],
     'options': [{ type: _angular_core.Input },],
     'groups': [{ type: _angular_core.Input, args: ['groups',] },],
     'settings': [{ type: _angular_core.Input },],
