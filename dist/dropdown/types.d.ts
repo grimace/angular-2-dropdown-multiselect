@@ -84,7 +84,7 @@ export interface IMultiSelectTexts {
 }
 export interface IMultiSelectFilterControl {
     groups?: any[];
-    settings?: any[];
+    settings?: any;
     options?: any[];
     texts?: any[];
     searchText?: any;
