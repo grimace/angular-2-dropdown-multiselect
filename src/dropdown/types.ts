@@ -92,3 +92,13 @@ export interface IMultiSelectTexts {
   defaultTitle?: string;
   allSelected?: string;
 }
+
+export interface IMultiSelectFilterControl {
+
+  groups?: any[];
+  settings?: any[];
+  options?: any[];
+  texts?: any[];
+  searchText?: any;
+
+}
