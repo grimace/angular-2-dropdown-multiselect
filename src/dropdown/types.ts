@@ -96,9 +96,9 @@ export interface IMultiSelectTexts {
 export interface IMultiSelectFilterControl {
 
   groups?: any[];
-  settings?: any;
+  settings?: IMultiSelectSettings;
   options?: any[];
-  texts?: any[];
+  texts?: IMultiSelectTexts;
   searchText?: any;
 
 }

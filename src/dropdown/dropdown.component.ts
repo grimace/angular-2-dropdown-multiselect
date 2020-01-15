@@ -43,11 +43,11 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
 
   @Input( 'filterControl' ) filterControl:IMultiSelectFilterControl;
 
-  @Input() options: Array<IMultiSelectOption>;
+  // @Input() options: Array<IMultiSelectOption>;
   // @Input() groups: Array<IMultiSelectOptionGroup>;
-  @Input( 'groups' ) groups: Array<IMultiSelectOptionGroup>;
-  @Input() settings: IMultiSelectSettings;
-  @Input() texts: IMultiSelectTexts;
+  // @Input( 'groups' ) groups: Array<IMultiSelectOptionGroup>;
+  // @Input() settings: IMultiSelectSettings;
+  // @Input() texts: IMultiSelectTexts;
   @Input() disabled: boolean = false;
   // @Input() title:string;
   // defaultGroups: Array<IMultiSelectOptionGroup>;
@@ -152,19 +152,19 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
 
   ngOnInit() {
 
-    this.settings = Object.assign(this.defaultSettings, this.settings);
+    this.filterControl.settings = Object.assign(this.defaultSettings, this.filterControl.settings);
     // this.settings = LD.cloneDeep(this.defaultSettings);
-    this.texts = Object.assign(this.defaultTexts, this.texts);
+    this.filterControl.texts = Object.assign(this.defaultTexts, this.filterControl.texts);
     // this.texts = LD.cloneDeep(this.defaultTexts);
     // this.defaultGroups = LD.cloneDeep(this.groups);
-    this.title = this.texts.defaultTitle || '';
+    this.title = this.filterControl.texts.defaultTitle || '';
 
     // this.objDiffers = new Array<KeyValueDiffer<string, any>>();
-    console.log('setting differs on groups : ',this.groups.length);
-    this.defaultGroups = LD.cloneDeep(this.groups);
+    console.log('setting differs on groups : ',this.filterControl.groups.length);
+    this.defaultGroups = LD.cloneDeep(this.filterControl.groups);
 
 
-    this.groups.forEach((itemGroup, index) => {
+    this.filterControl.groups.forEach((itemGroup, index) => {
       this.modifiedStates.push({ name:itemGroup.name, modified:false });
       // this.objDiffers[index] = this.differs.find([itemGroup]).create();
 
@@ -181,7 +181,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   ngDoCheck() {
     // const changes = this.differ.diff(this.model);
     let totalCount = 0;
-    this.groups.forEach((itemGroup, index) => {
+    this.filterControl.groups.forEach((itemGroup, index) => {
          let count = this.groupChanged(this.defaultGroups[index],itemGroup);
          let modifiedState = this.modifiedStates[index];
          if (count > 0) {
@@ -221,8 +221,8 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   ngOnChanges(changes: SimpleChanges) {
     if (changes['options']) {
       console.log('ngOnChanges - changes detected : ',changes);
-      this.options = this.options || [];
-      this.parents = this.options
+      this.filterControl.options = this.filterControl.options || [];
+      this.parents = this.filterControl.options
         .filter(option => typeof option.parentId === 'number')
         .map(option => option.parentId);
     }
@@ -310,29 +310,29 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
         this.model.splice(parentIndex, 1);
         this.onRemoved.emit(option.parentId);
       } else if (this.parents.indexOf(option.id) > -1) {
-        let childIds = this.options.filter(child => this.model.indexOf(child.id) > -1 && child.parentId == option.id).map(child => child.id);
+        let childIds = this.filterControl.options.filter(child => this.model.indexOf(child.id) > -1 && child.parentId == option.id).map(child => child.id);
         this.model = this.model.filter(id => childIds.indexOf(id) < 0);
         childIds.forEach(childId => this.onRemoved.emit(childId));
       }
     } else {
-      if (this.settings.selectionLimit === 0 || (this.settings.selectionLimit && this.model.length < this.settings.selectionLimit)) {
+      if (this.filterControl.settings.selectionLimit === 0 || (this.filterControl.settings.selectionLimit && this.model.length < this.filterControl.settings.selectionLimit)) {
         this.model.push(option.id);
         this.onAdded.emit(option.id);
         if (option.parentId) {
-          let children = this.options.filter(child => child.id !== option.id && child.parentId == option.parentId);
+          let children = this.filterControl.options.filter(child => child.id !== option.id && child.parentId == option.parentId);
           if (children.every(child => this.model.indexOf(child.id) > -1)) {
             this.model.push(option.parentId);
             this.onAdded.emit(option.parentId);
           }
         } else if (this.parents.indexOf(option.id) > -1) {
-          let children = this.options.filter(child => this.model.indexOf(child.id) < 0 && child.parentId == option.id);
+          let children = this.filterControl.options.filter(child => this.model.indexOf(child.id) < 0 && child.parentId == option.id);
           children.forEach(child => {
             this.model.push(child.id);
             this.onAdded.emit(child.id);
           })
         }
       } else {
-        if (this.settings.autoUnselect) {
+        if (this.filterControl.settings.autoUnselect) {
           this.model.push(option.id);
           this.onAdded.emit(option.id);
           const removedOption = this.model.shift();
@@ -343,7 +343,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
         }
       }
     }
-    if (this.settings.closeOnSelect) {
+    if (this.filterControl.settings.closeOnSelect) {
       this.toggleDropdown();
     }
     this.model = this.model.slice();
@@ -367,8 +367,8 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   }
 
   updateTitle() {
-    if (this.numSelected === 0 || this.settings.fixedTitle) {
-      this.title = this.texts.defaultTitle || '';
+    if (this.numSelected === 0 || this.filterControl.settings.fixedTitle) {
+      this.title = this.filterControl.texts.defaultTitle || '';
     // } else if (this.settings.displayAllSelectedText && this.model.length === this.options.length) {
     //   this.title = this.texts.allSelected || '';
     // } else if (this.settings.dynamicTitleMaxItems && this.settings.dynamicTitleMaxItems >= this.numSelected) {
@@ -381,7 +381,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
     } else {
       this.title = this.numSelected
         + ' '
-        + (this.numSelected === 1 ? this.texts.checked : this.texts.checkedPlural);
+        + (this.numSelected === 1 ? this.filterControl.texts.checked : this.filterControl.texts.checkedPlural);
     }
   }
 
@@ -390,12 +390,12 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   }
 
   searchFilterApplied() {
-    return this.settings.enableSearch && this.searchFilterText && this.searchFilterText.length > 0;
+    return this.filterControl.settings.enableSearch && this.searchFilterText && this.searchFilterText.length > 0;
   }
 
   checkAll() {
-    let checkedOptions = (!this.searchFilterApplied() ? this.options :
-      (new MultiSelectSearchFilter()).transform(this.options, this.searchFilterText))
+    let checkedOptions = (!this.searchFilterApplied() ? this.filterControl.options :
+      (new MultiSelectSearchFilter()).transform(this.filterControl.options, this.searchFilterText))
       .filter((option: IMultiSelectOption) => {
         if (this.model.indexOf(option.id) === -1) {
           this.onAdded.emit(option.id);
@@ -410,7 +410,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
 
   uncheckAll() {
     let unCheckedOptions = (!this.searchFilterApplied() ? this.model
-      : (new MultiSelectSearchFilter()).transform(this.options, this.searchFilterText).map((option: IMultiSelectOption) => option.id)
+      : (new MultiSelectSearchFilter()).transform(this.filterControl.options, this.searchFilterText).map((option: IMultiSelectOption) => option.id)
     );
     this.model = this.model.filter((id: number) => {
       if (unCheckedOptions.indexOf(id) < 0) {
@@ -431,8 +431,8 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   }
 
   preventCheckboxCheck(event: Event, option: IMultiSelectOption) {
-    if (this.settings.selectionLimit && !this.settings.autoUnselect &&
-      this.model.length >= this.settings.selectionLimit &&
+    if (this.filterControl.settings.selectionLimit && !this.filterControl.settings.autoUnselect &&
+      this.model.length >= this.filterControl.settings.selectionLimit &&
       this.model.indexOf(option.id) === -1
     ) {
       event.preventDefault();
@@ -771,7 +771,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
 
   public getFilterCount() {
       let filterCount = 0;
-      for (let group of this.groups) {
+      for (let group of this.filterControl.groups) {
           if (group.changeCount) {
             filterCount += group.changeCount;
           }

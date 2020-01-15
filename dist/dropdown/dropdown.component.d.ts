@@ -5,10 +5,6 @@ export declare class MultiselectDropdown implements OnInit, OnChanges, DoCheck, 
     private element;
     private differs;
     filterControl: IMultiSelectFilterControl;
-    options: Array<IMultiSelectOption>;
-    groups: Array<IMultiSelectOptionGroup>;
-    settings: IMultiSelectSettings;
-    texts: IMultiSelectTexts;
     disabled: boolean;
     modifiedStates: any[];
     defaultGroups: Array<IMultiSelectOptionGroup>;

@@ -17169,6 +17169,11 @@ var MultiselectDropdown = (function () {
     function MultiselectDropdown(element, differs) {
         this.element = element;
         this.differs = differs;
+        // @Input() options: Array<IMultiSelectOption>;
+        // @Input() groups: Array<IMultiSelectOptionGroup>;
+        // @Input( 'groups' ) groups: Array<IMultiSelectOptionGroup>;
+        // @Input() settings: IMultiSelectSettings;
+        // @Input() texts: IMultiSelectTexts;
         this.disabled = false;
         // @Input() title:string;
         // defaultGroups: Array<IMultiSelectOptionGroup>;
@@ -17247,16 +17252,16 @@ var MultiselectDropdown = (function () {
     };
     MultiselectDropdown.prototype.ngOnInit = function () {
         var _this = this;
-        this.settings = Object.assign(this.defaultSettings, this.settings);
+        this.filterControl.settings = Object.assign(this.defaultSettings, this.filterControl.settings);
         // this.settings = LD.cloneDeep(this.defaultSettings);
-        this.texts = Object.assign(this.defaultTexts, this.texts);
+        this.filterControl.texts = Object.assign(this.defaultTexts, this.filterControl.texts);
         // this.texts = LD.cloneDeep(this.defaultTexts);
         // this.defaultGroups = LD.cloneDeep(this.groups);
-        this.title = this.texts.defaultTitle || '';
+        this.title = this.filterControl.texts.defaultTitle || '';
         // this.objDiffers = new Array<KeyValueDiffer<string, any>>();
-        console.log('setting differs on groups : ', this.groups.length);
-        this.defaultGroups = undefined(this.groups);
-        this.groups.forEach(function (itemGroup, index) {
+        console.log('setting differs on groups : ', this.filterControl.groups.length);
+        this.defaultGroups = undefined(this.filterControl.groups);
+        this.filterControl.groups.forEach(function (itemGroup, index) {
             _this.modifiedStates.push({ name: itemGroup.name, modified: false });
             // this.objDiffers[index] = this.differs.find([itemGroup]).create();
             // this.objDiffers[index] = this.differs.find(itemGroup.options).create();
@@ -17268,7 +17273,7 @@ var MultiselectDropdown = (function () {
         var _this = this;
         // const changes = this.differ.diff(this.model);
         var totalCount = 0;
-        this.groups.forEach(function (itemGroup, index) {
+        this.filterControl.groups.forEach(function (itemGroup, index) {
             var count = _this.groupChanged(_this.defaultGroups[index], itemGroup);
             var modifiedState = _this.modifiedStates[index];
             if (count > 0) {
@@ -17305,8 +17310,8 @@ var MultiselectDropdown = (function () {
     MultiselectDropdown.prototype.ngOnChanges = function (changes) {
         if (changes['options']) {
             console.log('ngOnChanges - changes detected : ', changes);
-            this.options = this.options || [];
-            this.parents = this.options
+            this.filterControl.options = this.filterControl.options || [];
+            this.parents = this.filterControl.options
                 .filter(function (option) { return typeof option.parentId === 'number'; })
                 .map(function (option) { return option.parentId; });
         }
@@ -17380,24 +17385,24 @@ var MultiselectDropdown = (function () {
                 this.onRemoved.emit(option.parentId);
             }
             else if (this.parents.indexOf(option.id) > -1) {
-                var childIds_1 = this.options.filter(function (child) { return _this.model.indexOf(child.id) > -1 && child.parentId == option.id; }).map(function (child) { return child.id; });
+                var childIds_1 = this.filterControl.options.filter(function (child) { return _this.model.indexOf(child.id) > -1 && child.parentId == option.id; }).map(function (child) { return child.id; });
                 this.model = this.model.filter(function (id) { return childIds_1.indexOf(id) < 0; });
                 childIds_1.forEach(function (childId) { return _this.onRemoved.emit(childId); });
             }
         }
         else {
-            if (this.settings.selectionLimit === 0 || (this.settings.selectionLimit && this.model.length < this.settings.selectionLimit)) {
+            if (this.filterControl.settings.selectionLimit === 0 || (this.filterControl.settings.selectionLimit && this.model.length < this.filterControl.settings.selectionLimit)) {
                 this.model.push(option.id);
                 this.onAdded.emit(option.id);
                 if (option.parentId) {
-                    var children = this.options.filter(function (child) { return child.id !== option.id && child.parentId == option.parentId; });
+                    var children = this.filterControl.options.filter(function (child) { return child.id !== option.id && child.parentId == option.parentId; });
                     if (children.every(function (child) { return _this.model.indexOf(child.id) > -1; })) {
                         this.model.push(option.parentId);
                         this.onAdded.emit(option.parentId);
                     }
                 }
                 else if (this.parents.indexOf(option.id) > -1) {
-                    var children = this.options.filter(function (child) { return _this.model.indexOf(child.id) < 0 && child.parentId == option.id; });
+                    var children = this.filterControl.options.filter(function (child) { return _this.model.indexOf(child.id) < 0 && child.parentId == option.id; });
                     children.forEach(function (child) {
                         _this.model.push(child.id);
                         _this.onAdded.emit(child.id);
@@ -17405,7 +17410,7 @@ var MultiselectDropdown = (function () {
                 }
             }
             else {
-                if (this.settings.autoUnselect) {
+                if (this.filterControl.settings.autoUnselect) {
                     this.model.push(option.id);
                     this.onAdded.emit(option.id);
                     var removedOption = this.model.shift();
@@ -17417,7 +17422,7 @@ var MultiselectDropdown = (function () {
                 }
             }
         }
-        if (this.settings.closeOnSelect) {
+        if (this.filterControl.settings.closeOnSelect) {
             this.toggleDropdown();
         }
         this.model = this.model.slice();
@@ -17437,8 +17442,8 @@ var MultiselectDropdown = (function () {
         this.numSelected = this.model && this.model.filter(function (id) { return _this.parents.indexOf(id) < 0; }).length || 0;
     };
     MultiselectDropdown.prototype.updateTitle = function () {
-        if (this.numSelected === 0 || this.settings.fixedTitle) {
-            this.title = this.texts.defaultTitle || '';
+        if (this.numSelected === 0 || this.filterControl.settings.fixedTitle) {
+            this.title = this.filterControl.texts.defaultTitle || '';
             // } else if (this.settings.displayAllSelectedText && this.model.length === this.options.length) {
             //   this.title = this.texts.allSelected || '';
             // } else if (this.settings.dynamicTitleMaxItems && this.settings.dynamicTitleMaxItems >= this.numSelected) {
@@ -17452,19 +17457,19 @@ var MultiselectDropdown = (function () {
         else {
             this.title = this.numSelected
                 + ' '
-                + (this.numSelected === 1 ? this.texts.checked : this.texts.checkedPlural);
+                + (this.numSelected === 1 ? this.filterControl.texts.checked : this.filterControl.texts.checkedPlural);
         }
     };
     MultiselectDropdown.prototype.setTitle = function (t) {
         this.title = t;
     };
     MultiselectDropdown.prototype.searchFilterApplied = function () {
-        return this.settings.enableSearch && this.searchFilterText && this.searchFilterText.length > 0;
+        return this.filterControl.settings.enableSearch && this.searchFilterText && this.searchFilterText.length > 0;
     };
     MultiselectDropdown.prototype.checkAll = function () {
         var _this = this;
-        var checkedOptions = (!this.searchFilterApplied() ? this.options :
-            (new MultiSelectSearchFilter()).transform(this.options, this.searchFilterText))
+        var checkedOptions = (!this.searchFilterApplied() ? this.filterControl.options :
+            (new MultiSelectSearchFilter()).transform(this.filterControl.options, this.searchFilterText))
             .filter(function (option) {
             if (_this.model.indexOf(option.id) === -1) {
                 _this.onAdded.emit(option.id);
@@ -17479,7 +17484,7 @@ var MultiselectDropdown = (function () {
     MultiselectDropdown.prototype.uncheckAll = function () {
         var _this = this;
         var unCheckedOptions = (!this.searchFilterApplied() ? this.model
-            : (new MultiSelectSearchFilter()).transform(this.options, this.searchFilterText).map(function (option) { return option.id; }));
+            : (new MultiSelectSearchFilter()).transform(this.filterControl.options, this.searchFilterText).map(function (option) { return option.id; }));
         this.model = this.model.filter(function (id) {
             if (unCheckedOptions.indexOf(id) < 0) {
                 return true;
@@ -17497,8 +17502,8 @@ var MultiselectDropdown = (function () {
         this.resetAll.emit();
     };
     MultiselectDropdown.prototype.preventCheckboxCheck = function (event, option) {
-        if (this.settings.selectionLimit && !this.settings.autoUnselect &&
-            this.model.length >= this.settings.selectionLimit &&
+        if (this.filterControl.settings.selectionLimit && !this.filterControl.settings.autoUnselect &&
+            this.model.length >= this.filterControl.settings.selectionLimit &&
             this.model.indexOf(option.id) === -1) {
             event.preventDefault();
         }
@@ -17817,7 +17822,7 @@ var MultiselectDropdown = (function () {
     // }
     MultiselectDropdown.prototype.getFilterCount = function () {
         var filterCount = 0;
-        for (var _i = 0, _a = this.groups; _i < _a.length; _i++) {
+        for (var _i = 0, _a = this.filterControl.groups; _i < _a.length; _i++) {
             var group = _a[_i];
             if (group.changeCount) {
                 filterCount += group.changeCount;
@@ -17842,10 +17847,6 @@ MultiselectDropdown.ctorParameters = function () { return [
 ]; };
 MultiselectDropdown.propDecorators = {
     'filterControl': [{ type: _angular_core.Input, args: ['filterControl',] },],
-    'options': [{ type: _angular_core.Input },],
-    'groups': [{ type: _angular_core.Input, args: ['groups',] },],
-    'settings': [{ type: _angular_core.Input },],
-    'texts': [{ type: _angular_core.Input },],
     'disabled': [{ type: _angular_core.Input },],
     'selectionLimitReached': [{ type: _angular_core.Output },],
     'dropdownClosed': [{ type: _angular_core.Output },],
