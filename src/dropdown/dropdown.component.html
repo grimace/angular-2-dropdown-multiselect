@@ -1,9 +1,9 @@
-<div class="dropdown" [ngClass]="settings.containerClasses" [class.open]="isVisible">
+<div class="dropdown" [ngClass]="filterControl.settings.containerClasses" [class.open]="isVisible">
 
-    <button *ngIf="!settings.exButtonId" type="button" class="dropdown-toggle" [ngClass]="settings.buttonClasses" (click)="toggleDropdown()" [disabled]="disabled"><span class="caret">{{ title }}</span></button>
+    <button *ngIf="!filterControl.settings.exButtonId" type="button" class="dropdown-toggle" [ngClass]="filterControl.settings.buttonClasses" (click)="toggleDropdown()" [disabled]="disabled"><span class="caret">{{ title }}</span></button>
 
     <accordion *ngIf="isVisible" class="dropdown-menu" class ="wrapper left container">
-      <ul [class.pull-right]="settings.pullRight" [class.dropdown-menu-right]="settings.pullRight" [style.max-height]="settings.maxHeight" class="sublist">
+      <ul [class.pull-right]="filterControl.settings.pullRight" [class.dropdown-menu-right]="filterControl.settings.pullRight" [style.max-height]="filterControl.settings.maxHeight" class="sublist">
 
         <!-- <li class="mdropdown-item search"> -->
           <!-- <div class="input-group"> -->
@@ -19,38 +19,38 @@
             <!-- </label> -->
         <!-- </span> -->
 
-        <li class="mdropdown-item check-control check-control-check" *ngIf="settings.showResetAll">
+        <li class="mdropdown-item check-control check-control-check" *ngIf="filterControl.settings.showResetAll">
           <a href="javascript:;" role="menuitem" tabindex="-1" (click)="reset()">
-            <span style="width: 16px;" [ngClass]="{'glyphicon glyphicon-ok': settings.checkedStyle !== 'fontawesome','fa fa-check': settings.checkedStyle === 'fontawesome'}"></span> {{ texts.resetAll }}
+            <span style="width: 16px;" [ngClass]="{'glyphicon glyphicon-ok': filterControl.settings.checkedStyle !== 'fontawesome','fa fa-check': filterControl.settings.checkedStyle === 'fontawesome'}"></span> {{ texts.resetAll }}
           </a>
         </li>
         <li class="mdropdown-item check-control check-control-check" *ngIf="settings.showCheckAll">
           <a href="javascript:;" role="menuitem" tabindex="-1" (click)="checkAll()">
-            <span style="width: 16px;" [ngClass]="{'glyphicon glyphicon-ok': settings.checkedStyle !== 'fontawesome','fa fa-check': settings.checkedStyle === 'fontawesome'}"></span> {{ texts.checkAll }}
+            <span style="width: 16px;" [ngClass]="{'glyphicon glyphicon-ok': filterControl.settings.checkedStyle !== 'fontawesome','fa fa-check': filterControl.settings.checkedStyle === 'fontawesome'}"></span> {{ texts.checkAll }}
           </a>
         </li>
-        <li class="mdropdown-item check-control check-control-uncheck" *ngIf="settings.showUncheckAll">
+        <li class="mdropdown-item check-control check-control-uncheck" *ngIf="filterControl.settings.showUncheckAll">
           <a href="javascript:;" role="menuitem" tabindex="-1" (click)="uncheckAll()">
-            <span style="width: 16px;" [ngClass]="{'glyphicon glyphicon-remove': settings.checkedStyle !== 'fontawesome','fa fa-times': settings.checkedStyle === 'fontawesome'}"></span> {{ texts.uncheckAll }}
+            <span style="width: 16px;" [ngClass]="{'glyphicon glyphicon-remove': filterControl.settings.checkedStyle !== 'fontawesome','fa fa-times': filterControl.settings.checkedStyle === 'fontawesome'}"></span> {{ texts.uncheckAll }}
           </a>
         </li>
-        <li *ngIf="settings.showCheckAll || settings.showUncheckAll" class="dropdown-divider divider"></li>
+        <li *ngIf="filterControl.settings.showCheckAll || filterControl.settings.showUncheckAll" class="dropdown-divider divider"></li>
 
       </ul>
 
     <accordion-group class="navGroup" *ngFor="let group of groups" [group]="group" [isOpen]="group.open">
 
-    <ul [class.pull-right]="settings.pullRight" [class.dropdown-menu-right]="settings.pullRight" [style.max-height]="settings.maxHeight" class="sublist">
+    <ul [class.pull-right]="filterControl.settings.pullRight" [class.dropdown-menu-right]="filterControl.settings.pullRight" [style.max-height]="filterControl.settings.maxHeight" class="sublist">
     <li class="mdropdown-item" [ngStyle]="getItemStyle(option)" *ngFor="let option of group.options" [class.dropdown-header]='option.type == "label"'>
       <ng-template [ngIf]='option.type == "label"'>{{ option.name }}</ng-template>
 
       <a *ngIf='option.type == "checkbox"' (click)='toggleSelected($event, group, option)' role="menuitem" tabindex="-1" [style.padding-left]="this.parents.length>0&&this.parents.indexOf(option.id)<0&&'30px'">
-        <input *ngIf="settings.checkedStyle === 'checkboxes'" type="checkbox" [checked]="option.on" (click)="preventCheckboxCheck($event, option)" [disabled]="isDisabled(option)"/>
-        <span *ngIf="settings.checkedStyle === 'glyphicon'" style="width: 16px;" class="glyphicon" [class.glyphicon-ok]="isSelected(option)"></span>
-        <span *ngIf="settings.checkedStyle === 'fontawesome'" style="width: 16px;display: inline-block;">
+        <input *ngIf="filterControl.settings.checkedStyle === 'checkboxes'" type="checkbox" [checked]="option.on" (click)="preventCheckboxCheck($event, option)" [disabled]="isDisabled(option)"/>
+        <span *ngIf="filterControl.settings.checkedStyle === 'glyphicon'" style="width: 16px;" class="glyphicon" [class.glyphicon-ok]="isSelected(option)"></span>
+        <span *ngIf="filterControl.settings.checkedStyle === 'fontawesome'" style="width: 16px;display: inline-block;">
           <i *ngIf="isSelected(option)" class="fa fa-check" aria-hidden="true"></i>
         </span>
-        <span [ngClass]="settings.itemClasses" [style.font-weight]="this.parents.indexOf(option.id)>=0?'bold':'normal'">
+        <span [ngClass]="filterControl.settings.itemClasses" [style.font-weight]="this.parents.indexOf(option.id)>=0?'bold':'normal'">
           {{ option.name }}
         </span>
         <img *ngIf="option.image" class="dropdown-image" src="{{option.image}}" />
@@ -58,12 +58,12 @@
 
       <span *ngIf='option.type == "guardgroup"' class="guardGroup">
         <a *ngFor="let item of option.group" (click)="updateGuard($event, group, option, item)" role="menuitem" tabindex="-1" [style.padding-left]="this.parents.length>0&&this.parents.indexOf(option.id)<0&&'30px'">
-          <input *ngIf="settings.checkedStyle === 'checkboxes'" type="checkbox" [checked]="item.on"  (click)="preventCheckboxCheck($event, option)" [disabled]="isDisabled(item)"/>
-          <span *ngIf="settings.checkedStyle === 'glyphicon'" style="width: 16px;" class="glyphicon" [class.glyphicon-ok]="isSelected(option)"></span>
-          <span *ngIf="settings.checkedStyle === 'fontawesome'" style="width: 16px;display: inline-block;">
+          <input *ngIf="filterControl.settings.checkedStyle === 'checkboxes'" type="checkbox" [checked]="item.on"  (click)="preventCheckboxCheck($event, option)" [disabled]="isDisabled(item)"/>
+          <span *ngIf="filterControl.settings.checkedStyle === 'glyphicon'" style="width: 16px;" class="glyphicon" [class.glyphicon-ok]="isSelected(option)"></span>
+          <span *ngIf="filterControl.settings.checkedStyle === 'fontawesome'" style="width: 16px;display: inline-block;">
             <i *ngIf="isSelected(item)" class="fa fa-check" aria-hidden="true"></i>
           </span>
-          <span [ngClass]="settings.itemClasses" [style.font-weight]="this.parents.indexOf(option.id)>=0?'bold':'normal'">
+          <span [ngClass]="filterControl.settings.itemClasses" [style.font-weight]="this.parents.indexOf(option.id)>=0?'bold':'normal'">
             {{ item.name }}
           </span>
           <img *ngIf="item.image" class="dropdown-image" src="{{item.image}}" />
