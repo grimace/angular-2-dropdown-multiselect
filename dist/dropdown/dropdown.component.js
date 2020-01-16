@@ -131,7 +131,7 @@ var MultiselectDropdown = (function () {
             if (count > 0) {
                 modifiedState.modified = (count > 0) ? true : false;
                 itemGroup.changeCount = count;
-                console.log("setting modifiedState : ", modifiedState, count);
+                // console.log("setting modifiedState : ",modifiedState, count);
                 // const objDiffer = this.objDiffers[index];
                 // const objChanges = objDiffer.diff(itemGroup.options);
                 // if (objChanges) {
