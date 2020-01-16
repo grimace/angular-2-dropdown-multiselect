@@ -12,26 +12,26 @@
           <!-- </div> -->
         <!-- </li> -->
 
-        <!-- <span class="boolean-check" *ngIf="settings.operators"> -->
+        <!-- <span class="boolean-check" *ngIf="filterControl.settings.operators"> -->
             <!-- <label class="radioLabel" *ngFor="let item of settings.operators"> -->
-                <!-- <input class="radioButton" type="radio" name="booleans" (click)="updateOperator(item.value)" [checked]="settings.operator === item.value"> -->
+                <!-- <input class="radioButton" type="radio" name="booleans" (click)="updateOperator(item.value)" [checked]="filterControl.settings.operator === item.value"> -->
                 <!-- {{item.name}} -->
             <!-- </label> -->
         <!-- </span> -->
 
         <li class="mdropdown-item check-control check-control-check" *ngIf="filterControl.settings.showResetAll">
           <a href="javascript:;" role="menuitem" tabindex="-1" (click)="reset()">
-            <span style="width: 16px;" [ngClass]="{'glyphicon glyphicon-ok': filterControl.settings.checkedStyle !== 'fontawesome','fa fa-check': filterControl.settings.checkedStyle === 'fontawesome'}"></span> {{ texts.resetAll }}
+            <span style="width: 16px;" [ngClass]="{'glyphicon glyphicon-ok': filterControl.settings.checkedStyle !== 'fontawesome','fa fa-check': filterControl.settings.checkedStyle === 'fontawesome'}"></span> {{ filterControl.texts.resetAll }}
           </a>
         </li>
-        <li class="mdropdown-item check-control check-control-check" *ngIf="settings.showCheckAll">
+        <li class="mdropdown-item check-control check-control-check" *ngIf="filterControl.settings.showCheckAll">
           <a href="javascript:;" role="menuitem" tabindex="-1" (click)="checkAll()">
-            <span style="width: 16px;" [ngClass]="{'glyphicon glyphicon-ok': filterControl.settings.checkedStyle !== 'fontawesome','fa fa-check': filterControl.settings.checkedStyle === 'fontawesome'}"></span> {{ texts.checkAll }}
+            <span style="width: 16px;" [ngClass]="{'glyphicon glyphicon-ok': filterControl.settings.checkedStyle !== 'fontawesome','fa fa-check': filterControl.settings.checkedStyle === 'fontawesome'}"></span> {{ filterControl.texts.checkAll }}
           </a>
         </li>
         <li class="mdropdown-item check-control check-control-uncheck" *ngIf="filterControl.settings.showUncheckAll">
           <a href="javascript:;" role="menuitem" tabindex="-1" (click)="uncheckAll()">
-            <span style="width: 16px;" [ngClass]="{'glyphicon glyphicon-remove': filterControl.settings.checkedStyle !== 'fontawesome','fa fa-times': filterControl.settings.checkedStyle === 'fontawesome'}"></span> {{ texts.uncheckAll }}
+            <span style="width: 16px;" [ngClass]="{'glyphicon glyphicon-remove': filterControl.settings.checkedStyle !== 'fontawesome','fa fa-times': filterControl.settings.checkedStyle === 'fontawesome'}"></span> {{ filterControl.texts.uncheckAll }}
           </a>
         </li>
         <li *ngIf="filterControl.settings.showCheckAll || filterControl.settings.showUncheckAll" class="dropdown-divider divider"></li>
