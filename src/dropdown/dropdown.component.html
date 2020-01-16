@@ -38,7 +38,7 @@
 
       </ul>
 
-    <accordion-group class="navGroup" *ngFor="let group of groups" [group]="group" [isOpen]="group.open">
+    <accordion-group class="navGroup" *ngFor="let group of filterControl.groups" [group]="group" [isOpen]="group.open">
 
     <ul [class.pull-right]="filterControl.settings.pullRight" [class.dropdown-menu-right]="filterControl.settings.pullRight" [style.max-height]="filterControl.settings.maxHeight" class="sublist">
     <li class="mdropdown-item" [ngStyle]="getItemStyle(option)" *ngFor="let option of group.options" [class.dropdown-header]='option.type == "label"'>
