@@ -151,7 +151,7 @@ export class MultiselectDropdown implements OnInit, OnChanges, DoCheck, ControlV
   }
 
   ngOnInit() {
-
+    console.log('filterControl : ',this.filterControl);
     this.filterControl.settings = Object.assign(this.defaultSettings, this.filterControl.settings);
     // this.settings = LD.cloneDeep(this.defaultSettings);
     this.filterControl.texts = Object.assign(this.defaultTexts, this.filterControl.texts);

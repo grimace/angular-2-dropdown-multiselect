@@ -103,6 +103,7 @@ var MultiselectDropdown = (function () {
     };
     MultiselectDropdown.prototype.ngOnInit = function () {
         var _this = this;
+        console.log('filterControl : ', this.filterControl);
         this.filterControl.settings = Object.assign(this.defaultSettings, this.filterControl.settings);
         // this.settings = LD.cloneDeep(this.defaultSettings);
         this.filterControl.texts = Object.assign(this.defaultTexts, this.filterControl.texts);
