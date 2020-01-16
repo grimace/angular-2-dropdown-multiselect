@@ -44,26 +44,26 @@
     <li class="mdropdown-item" [ngStyle]="getItemStyle(option)" *ngFor="let option of group.options" [class.dropdown-header]='option.type == "label"'>
       <ng-template [ngIf]='option.type == "label"'>{{ option.name }}</ng-template>
 
-      <a *ngIf='option.type == "checkbox"' (click)='toggleSelected($event, group, option)' role="menuitem" tabindex="-1" [style.padding-left]="this.parents.length>0&&this.parents.indexOf(option.id)<0&&'30px'">
+      <a *ngIf='option.type == "checkbox"' (click)='toggleSelected($event, group, option)' role="menuitem" tabindex="-1">
         <input *ngIf="filterControl.settings.checkedStyle === 'checkboxes'" type="checkbox" [checked]="option.on" (click)="preventCheckboxCheck($event, option)" [disabled]="isDisabled(option)"/>
         <span *ngIf="filterControl.settings.checkedStyle === 'glyphicon'" style="width: 16px;" class="glyphicon" [class.glyphicon-ok]="isSelected(option)"></span>
         <span *ngIf="filterControl.settings.checkedStyle === 'fontawesome'" style="width: 16px;display: inline-block;">
           <i *ngIf="isSelected(option)" class="fa fa-check" aria-hidden="true"></i>
         </span>
-        <span [ngClass]="filterControl.settings.itemClasses" [style.font-weight]="this.parents.indexOf(option.id)>=0?'bold':'normal'">
+        <span [ngClass]="filterControl.settings.itemClasses">
           {{ option.name }}
         </span>
         <img *ngIf="option.image" class="dropdown-image" src="{{option.image}}" />
       </a>
 
       <span *ngIf='option.type == "guardgroup"' class="guardGroup">
-        <a *ngFor="let item of option.group" (click)="updateGuard($event, group, option, item)" role="menuitem" tabindex="-1" [style.padding-left]="this.parents.length>0&&this.parents.indexOf(option.id)<0&&'30px'">
+        <a *ngFor="let item of option.group" (click)="updateGuard($event, group, option, item)" role="menuitem" tabindex="-1">
           <input *ngIf="filterControl.settings.checkedStyle === 'checkboxes'" type="checkbox" [checked]="item.on"  (click)="preventCheckboxCheck($event, option)" [disabled]="isDisabled(item)"/>
           <span *ngIf="filterControl.settings.checkedStyle === 'glyphicon'" style="width: 16px;" class="glyphicon" [class.glyphicon-ok]="isSelected(option)"></span>
           <span *ngIf="filterControl.settings.checkedStyle === 'fontawesome'" style="width: 16px;display: inline-block;">
             <i *ngIf="isSelected(item)" class="fa fa-check" aria-hidden="true"></i>
           </span>
-          <span [ngClass]="filterControl.settings.itemClasses" [style.font-weight]="this.parents.indexOf(option.id)>=0?'bold':'normal'">
+          <span [ngClass]="filterControl.settings.itemClasses">
             {{ item.name }}
           </span>
           <img *ngIf="item.image" class="dropdown-image" src="{{item.image}}" />
